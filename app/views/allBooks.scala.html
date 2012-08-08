@@ -5,6 +5,7 @@
 @main("DynaLib: Alla böcker") {
 	<h2>Alla böcker</h2>
 	@for(book <- books) {
-		<b>@book.getTitle</b> (@book.getPages pages)<br>
+
+		<b>@book.title</b> (@book.pages pages)<br>
 	}
 }

@@ -1,12 +1,5 @@
 package models
 
-class Book(title: String, pages: Int) {
+class Book(var title: String, var pages: Int) {
 
-	def getTitle: String = {
-		return title
-	}
-	
-	def getPages: Int = {
-		return pages 
-	}
 }
