@@ -1,5 +1,3 @@
-@(testForm: Form[(Int, Int, String)])
-
 @import helper._
 
 @main("Forms") {
@@ -7,19 +5,4 @@
 Dynalib!<br>
 <a href="/library">List all books</a>
 
-<!--HELLO THIS OLD STUFF. Oh glory glory Jakobs caluclator
-	@form(routes.Application.operationHandler()) {
-		@inputText(testForm("x"))
-		@inputText(testForm("y"))
-		@select(
-			testForm("options"), 
-            options = options(SelectOptions.options),
-            '_default -> "Choose a value" 
-		)
-
-		<input type="submit" value="Do">
-	}
-	
-	<a href="/all">Show all results</a>
-	-->
 }

@@ -13,6 +13,11 @@ import models.Book
 import models.Author
 
 object DynaLib extends Controller {
+	
+	def index = Action {
+		Ok(views.html.index())
+	}
+	
 	def listAllBooks = Action {
 		val list = BookController.getAllBooks()
 		Ok(views.html.allBooks(list))

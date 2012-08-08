@@ -24,7 +24,7 @@ object Operations {
 			result = 0
 			op = "error"
 		}
-		DBHandler.saveResultInDb(result, op)
+		
 		return result
 	}
 	
