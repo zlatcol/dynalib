@@ -9,11 +9,11 @@ import models.Book
 
 object DBHandler {
 	
-	val bookParser = get[String]("title") map {case title => new Book(title)}
+	val bookParser = get[String]("title")~get[Int]("pages") map {case title~pages => new Book(title,pages)}
 	
 	def getTitles(): List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT title FROM books").as(bookParser *)
+			SQL("SELECT title, pages FROM books").as(bookParser *)
 			
 		}
 		
