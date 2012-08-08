@@ -1,4 +1,6 @@
-This is your new Play 2.0 application
-=====================================
+En webbapp som ska hantera böckerna på Dynakontoret.
 
-This file will be packaged with your application, when using `play dist`.
+När någon lånar en bok så ska denna person, via appen, visa detta.
+På så sätt så kan alla se vilka böcker som finns inne, vem som har
+vilken bok, och när boken kommer vara tillbaka.
+
