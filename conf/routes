@@ -3,7 +3,8 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /    	                    controllers.Application.index
+GET		/library					controllers.DynaLib.listAllBooks
 POST	/operation					controllers.Application.operationHandler
 GET		/all						controllers.Application.all
 
