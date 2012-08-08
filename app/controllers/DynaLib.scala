@@ -22,4 +22,6 @@ object DynaLib extends Controller {
 		val list = BookController.getAllBooks()
 		Ok(views.html.allBooks(list))
 	}
+	
+	def test = {}
 }
