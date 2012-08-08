@@ -8,8 +8,8 @@ import anorm.SqlParser._
 import models.Book
 
 object DBHandler {
-	
-	val intParser = get[String]("result")~get[String]("operation") map {case id~operation => (id, operation)}
+	/** Old junk **/ 
+	/*val intParser = get[String]("result")~get[String]("operation") map {case id~operation => (id, operation)}
 	
 	def saveResultInDb(result: Any, operation: String) {
 		DB.withConnection { implicit c =>
@@ -24,11 +24,11 @@ object DBHandler {
 		DB.withConnection { implicit c =>
 			SQL("select result, operation from results").as(intParser *)
 		}
-	}
+	}*/
 
 	val bookParser = get[String]("title") map {case title => new Book(title)}
 	
-	def getBooks(): List[Book] = {
+	def getTitles(): List[Book] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT title FROM books").as(bookParser *)
 			

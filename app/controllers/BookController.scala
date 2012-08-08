@@ -6,6 +6,6 @@ import models.Book
 
 object BookController {
 	def getAllBooks(): List[Book] = {
-		return DBHandler.getBooks()
+		return DBHandler.getTitles()
 	}
 }
