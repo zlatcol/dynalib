@@ -14,12 +14,7 @@ import models.Author
 
 object DynaLib extends Controller {
 	def listAllBooks = Action {
-		val a1 = new Author("Stephen King")
-		val a2 = new Author("Hon som skrev Harry Potter")
-		val b1 = new Book("Det", a1)
-		val b2 = new Book("Harry Potter gör nått dumt", a2)
-		val list = List[Book](b1,b2)
-		
+		val list = BookController.getAllBooks()
 		Ok(views.html.allBooks(list))
 	}
 }

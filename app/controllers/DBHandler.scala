@@ -5,6 +5,8 @@ import play.api.Play.current
 import anorm._
 import anorm.SqlParser._
 
+import models.Book
+
 object DBHandler {
 	
 	val intParser = get[String]("result")~get[String]("operation") map {case id~operation => (id, operation)}
@@ -23,8 +25,14 @@ object DBHandler {
 			SQL("select result, operation from results").as(intParser *)
 		}
 	}
+
+	val bookParser = get[String]("title") map {case title => new Book(title)}
 	
-	def mysql() {
+	def getBooks(): List[Book] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT title FROM books").as(bookParser *)
+			
+		}
 		
 	}
 

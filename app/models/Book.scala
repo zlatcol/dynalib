@@ -1,13 +1,8 @@
 package models
 
-class Book(title: String, author: Author) {
+class Book(title: String) {
 	
 	def getTitle: String = {
 		return title
 	}
-	
-	def getAuthor: Author = {
-		return author
-	}
-	
 }
