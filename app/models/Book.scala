@@ -1,5 +1,5 @@
 package models
 
-class Book(var title: String, var pages: Int) {
+class Book(var title: String, var language: String, var pages: Int) {
 
 }

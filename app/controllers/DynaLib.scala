@@ -1,6 +1,5 @@
 package controllers
 
-import controllers.BookController;
 import play.api._
 import play.api.mvc._
 import play.api.data._
@@ -36,8 +35,9 @@ object DynaLib extends Controller {
 			errors => BadRequest(views.html.index()),
 			result => {
 				val title = result._1
-				val pages = result._2
-				BookController.addBook(title, pages)
+				val language = result._2
+				val pages =result._3
+				BookController.addBook(title, language ,pages)
 				Ok(views.html.index())
 			}
 		)

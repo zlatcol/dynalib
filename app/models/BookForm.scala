@@ -8,6 +8,7 @@ object BookForm {
 	val addBookForm = Form(
 		tuple(
 			"title" -> text,
+			"language" -> text,
 			"pages" -> number
 		)
 	)
