@@ -26,4 +26,13 @@ class DynaLibTest extends Specification {
 			contentAsString(result) must contain("pages")
 		}
 	
+	"respond to the library Action" in {
+		running(FakeApplication()) {
+			val Some(result) = routeAndCall(FakeRequest(GET, "/library"))
+			contentType(result) must beSome("text/html")
+			charset(result) must beSome("utf-8")
+			contentAsString(result) must contain("Flickan som lekte med en sten")
+			}
+		}
+	
 }
