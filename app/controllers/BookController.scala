@@ -10,7 +10,7 @@ import play.api.data.Forms._
 object BookController extends Controller {
 	
 	def getAllBooks(): List[Book] = {
-		return DBHandler.getTitles()
+		Book.getAll
 	}
 	
 	/**
@@ -21,9 +21,7 @@ object BookController extends Controller {
 		DBHandler.addBook(book)
 	}
 	
-	def getBook(id: Int): Book = {
-		val listBook = DBHandler.getBook(id)
-		val book = listBook(0)
-		return book
+	def getBook(id: Int): Option[Book] = {
+		Book.getById(id)
 	}
 }

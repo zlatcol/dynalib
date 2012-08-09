@@ -1,9 +1,12 @@
-@(book: Book)
-@import helper._
+@(book: Option[Book])
 
 @main("DynaLib: Bok") {
 	<h2>BokInfo:</h2>
-	<b>Title:</b> @book.title <br/>
-	<b>Langauge:</b> @book.language <br/>
-	<b>Pages:</b> @book.pages <br/>
+	@book.map { b =>
+		<b>Title:</b> @b.title <br/>
+		<b>Language:</b> @b.language <br/>
+		<b>Pages:</b> @b.pages <br/>
+	}.getOrElse { 
+		<i>Book not found :(</i>
+	}   
 }

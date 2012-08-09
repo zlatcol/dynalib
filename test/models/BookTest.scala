@@ -1,0 +1,42 @@
+package controllers2
+
+import org.specs2.mutable._
+import org.specs2.mock.Mockito
+import play.api.test._
+import play.api.test.Helpers._
+import controllers.DBHandler
+import models.Book
+
+class BookTest extends Specification with Mockito {
+  
+	"should be able to read/write fields from book" in {
+		val b = new Book(1, "Title", "English", 200)
+		b.id must equalTo(1)
+		b.title must equalTo("Title")
+		b.language must equalTo("English")
+		b.pages must equalTo(200)		
+	}
+
+	"return a single book" in {
+	  running(FakeApplication()) {
+		val book = Book.getById(1).get
+			assert(book.isInstanceOf[Book])
+			book.id must equalTo(1)
+		}
+	}
+
+	"should not find book" in {
+	  running(FakeApplication()) {
+		val book = Book.getById(-1).getOrElse("not found")
+			book must equalTo("not found")
+		}
+	}
+	
+	"find list of books" in {
+  	  running(FakeApplication()) {
+  	    val books = Book.getAll
+  	    assert(books(0).isInstanceOf[Book])
+  	  }
+	}
+	
+}
