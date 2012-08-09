@@ -49,4 +49,12 @@ object DynaLib extends Controller {
 	def addBook = Action {
 		Ok(views.html.addBook(BookForm.addBookForm))
 	}
+	
+	/** 
+	 * Hämta Bokinfo och skicka till book vyn
+	 */
+	def book(id: Int) = Action {
+		val book = BookController.getBook(id)
+		Ok(views.html.book(book))
+	}
 }

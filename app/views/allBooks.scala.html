@@ -6,6 +6,6 @@
 	<h2>Alla böcker</h2>
 	@for(book <- books) {
 
-		<b>@book.title</b><br>
+		<b><a href="library/@book.id">@book.title</b></a><br>
 	}
 }

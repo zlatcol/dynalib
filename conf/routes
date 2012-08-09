@@ -5,6 +5,7 @@
 # Startsidan
 GET     /    	                    controllers.DynaLib.index
 GET		/library					controllers.DynaLib.listAllBooks
+GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 
 POST	/doAdd						controllers.DynaLib.add

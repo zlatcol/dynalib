@@ -17,7 +17,13 @@ object BookController extends Controller {
 	 * Skapa Book objekt, skicka till DBn.
 	 */
 	def addBook(bookInfo: (String, String, Int)) {
-		val book = new Book(bookInfo._1, bookInfo._2 ,bookInfo._3)
+		val book = List[(String, String, Int)]((bookInfo._1, bookInfo._2 ,bookInfo._3))
 		DBHandler.addBook(book)
+	}
+	
+	def getBook(id: Int): Book = {
+		val listBook = DBHandler.getBook(id)
+		val book = listBook(0)
+		return book
 	}
 }
