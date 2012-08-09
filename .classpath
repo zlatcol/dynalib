@@ -103,5 +103,6 @@
 	<classpathentry kind="lib" path="C:/Frameworks/neo4j-community-1.8.M06/lib/scala-library-2.9.1-1.jar"/>
 	<classpathentry kind="lib" path="C:/Frameworks/neo4j-community-1.8.M06/lib/server-api-1.8.M06.jar"/>
 	<classpathentry kind="lib" path="C:/Frameworks/play-2.0.3/repository/local/mysql/mysql-connector-java/mysql-connector-java-5.1.18.jar"/>
+	<classpathentry kind="lib" path="lib/scalatest_2.9.0-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

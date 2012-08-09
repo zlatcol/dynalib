@@ -1,0 +1,13 @@
+@(bookForm: Form[(String, Int)])
+
+@import helper._
+
+@main("DynaLib") {
+	<h2>Add book!</h2>
+	
+	@form(routes.DynaLib.add) {
+		@inputText(bookForm("title"))
+		@inputText(bookForm("pages"))
+		<input type="submit" value="Add">
+	}
+}

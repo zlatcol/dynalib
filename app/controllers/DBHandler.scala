@@ -16,7 +16,12 @@ object DBHandler {
 			SQL("SELECT title, pages FROM books").as(bookParser *)
 			
 		}
-		
+	}
+	
+	def addBook(book: Book) {
+		DB.withConnection { implicit c =>
+			SQL("INSERT INTO books (title, pages) VALUES ({title}, {pages})").on('title -> book.title, 'pages -> book.pages).executeUpdate()
+		}
 	}
 
 }
