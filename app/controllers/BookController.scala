@@ -16,8 +16,9 @@ object BookController extends Controller {
 	/**
 	 * Skapa Book objekt, skicka till DBn.
 	 */
-	def addBook(book: Book) {
-		DBHandler.addBook(book)
+	def addBook(book: Book): Int = {
+		val id = DBHandler.addBook(book).getOrElse(0)
+		return Integer.parseInt(id.toString())
 	}
 	
 	def getBook(id: Int): Option[Book] = {

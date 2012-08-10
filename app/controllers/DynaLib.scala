@@ -33,9 +33,11 @@ object DynaLib extends Controller {
 	def add = Action { implicit request =>
 		BookHelper.addBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
-			book => {
-				BookController.addBook(book)
-				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(book.title)))
+			bookForm => {
+				val book = new Book(bookForm._1, bookForm._2, bookForm._3, bookForm._4)
+				val bookId = BookController.addBook(book)
+				AuthorController.addBookToAuthor(bookId, bookForm._5)
+				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(bookForm._2)))
 			}
 		)
 	}

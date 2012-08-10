@@ -5,12 +5,13 @@ import play.api.data.Forms._
 object BookHelper {
 	/** Add book formuläret **/
 	val addBookForm = Form(
-		mapping(
+		tuple(
 			"id" -> number,
 			"title" -> nonEmptyText,
 			"language" -> nonEmptyText,
-			"pages" -> number(min = 0)
-		)(Book.apply)(Book.unapply)
+			"pages" -> number(min = 0),
+			"author" -> number
+		)
 	)
 	
 	/** Felmeddelanden **/

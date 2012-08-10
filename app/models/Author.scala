@@ -18,11 +18,6 @@ object Author {
   		get[String]("name") map {
   			case id~name => new Author(id, name)
   		}
-	
-	val authors = List[(String, Int)](
-			("France",1),
-			("England",2)
-		)
 		
 	def getAuthors: List[Author] = {
 		DB.withConnection { implicit c =>
@@ -34,6 +29,12 @@ object Author {
 	def getByBookId(id: Int): List[Author] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT authors.id, authors.name FROM authors WHERE id IN (SELECT authorId FROM book_author WHERE bookId = {id})").on('id -> id).as(authorParser *)
+		}
+	}
+	
+	def addBookToAuthor(bookId: Int, authorId: Int) {
+		DB.withConnection { implicit c =>
+			SQL("INSERT INTO book_author (bookId, authorId) VALUES ({bId}, {aId})").on('bId -> bookId, 'aId -> authorId).executeInsert()
 		}
 	}
 }
