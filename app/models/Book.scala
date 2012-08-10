@@ -6,7 +6,7 @@ import play.api.Play.current
 import anorm._
 import anorm.SqlParser._
 
-class Book (
+case class Book (
 	val id: Int,
 	var title: String,
 	var language: String,
