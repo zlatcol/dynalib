@@ -1,10 +1,10 @@
 package models
 
-class Author(name: String) {
-	def getName: String = {
-		return name
-	}
-	def getGangster: Boolean = {
-		return true
-	}
+case class Author (
+	val id: Int,
+	var name: String
+)
+
+object Author {
+	
 }
