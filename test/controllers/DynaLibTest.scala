@@ -17,6 +17,7 @@ class DynaLibTest extends Specification with Mockito{
 		}
 	
 	"add book page should render correctly" in {
+		running(FakeApplication()) {
 		val result = controllers.DynaLib.addBook()(FakeRequest())
 			status(result) must equalTo(OK)
 			contentType(result) must beSome("text/html")
@@ -25,6 +26,7 @@ class DynaLibTest extends Specification with Mockito{
 			contentAsString(result) must contain("title")
 			contentAsString(result) must contain("pages")
 		}
+	}
 	
 	"library page should render some book that is in db" in {
 		running(FakeApplication()) {

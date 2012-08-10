@@ -52,6 +52,7 @@ object DynaLib extends Controller {
 	 */
 	def book(id: Int) = Action {
 		val book = BookController.getBook(id)
-		Ok(views.html.book(book))
+		val authors = AuthorController.getAuthorByBookId(id)
+		Ok(views.html.book(book, authors))
 	}
 }

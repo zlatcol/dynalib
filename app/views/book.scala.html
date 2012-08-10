@@ -1,4 +1,4 @@
-@(book: Option[Book])
+@(book: Option[Book], authors: List[Author])
 
 @main("DynaLib: Bok") {
 	<h2>BokInfo:</h2>
@@ -6,6 +6,10 @@
 		<b>Title:</b> @b.title <br/>
 		<b>Language:</b> @b.language <br/>
 		<b>Pages:</b> @b.pages <br/>
+		<b>Authors: </b> </br>
+		@for(author <- authors) {
+			@author.name </br>
+		}
 	}.getOrElse { 
 		<i>Book not found :(</i>
 	}   
