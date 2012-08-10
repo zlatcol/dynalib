@@ -22,7 +22,6 @@ object Author {
 	def getAuthors: List[Author] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT id, name FROM authors").as(authorParser *)
-			
 		}
 	}
 	

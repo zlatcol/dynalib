@@ -18,7 +18,7 @@ object BookController extends Controller {
 	 */
 	def addBook(book: Book): Int = {
 		val id = Book.addBook(book).getOrElse(0)
-		return Integer.parseInt(id.toString())
+		Integer.parseInt(id.toString())
 	}
 	
 	def getBook(id: Int): Option[Book] = {
