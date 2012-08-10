@@ -8,3 +8,8 @@ dist
 bin
 .target
 .cache
+.classpath
+
+.project
+
+.settings/org.scala-ide.sdt.core.prefs
