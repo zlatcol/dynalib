@@ -10,7 +10,7 @@ import anorm._
 import anorm.SqlParser._
 import models.Book
 import models.Author
-import models.BookForm
+import models.BookHelper
 
 object DynaLib extends Controller {
 	
@@ -31,14 +31,14 @@ object DynaLib extends Controller {
 	 * result = Tuple2(title, pages)
 	 */
 	def add = Action { implicit request =>
-		BookForm.addBookForm.bindFromRequest.fold(
-			errors => BadRequest(views.html.index()),
+		BookHelper.addBookForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
 			result => {
 				val title = result._1
 				val language = result._2
 				val pages =result._3
 				BookController.addBook(title, language ,pages)
-				Ok(views.html.index())
+				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(title)))
 			}
 		)
 	}
@@ -47,7 +47,7 @@ object DynaLib extends Controller {
 	 * Visa addBook vyn
 	 */
 	def addBook = Action {
-		Ok(views.html.addBook(BookForm.addBookForm))
+		Ok(views.html.addBook(BookHelper.addBookForm))
 	}
 	
 	/** 

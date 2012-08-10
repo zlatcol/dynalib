@@ -1,10 +1,9 @@
-package controllers2
+package controllers
 
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import play.api.test._
 import play.api.test.Helpers._
-import controllers.DBHandler
 import models.Book
 
 class BookTest extends Specification with Mockito {
@@ -39,4 +38,11 @@ class BookTest extends Specification with Mockito {
   	  }
 	}
 	
+	"should give error msg when adding book with missing info" in {
+		val result = controllers.DynaLib.add()(FakeRequest())
+			status(result) must equalTo(400) //Bad request, finns det någon motsvarighet till OK för detta? Jag kan inte hitta nån.
+			contentType(result) must beSome("text/html")
+			charset(result) must beSome("utf-8")
+			contentAsString(result) must contain("Something went wrong")
+		}
 }
