@@ -26,6 +26,16 @@ object DynaLib extends Controller {
 		val list = BookController.getAllBooks
 		Ok(views.html.allBooks(list))
 	}
+	
+	def listAvailableBooks = Action {
+		val list = BookController.getAllAvailableBooks
+		Ok(views.html.allBooks(list))
+	}
+	
+	def listBorrowedBooks = Action {
+		val list = BookController.getAllBorrowedBooks
+		Ok(views.html.allBooks(list))
+	}
 			
 	/** 
 	 * Tar emot requesten från addBook viewn och skickar det vidare till BookControllern

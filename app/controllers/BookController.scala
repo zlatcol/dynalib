@@ -44,4 +44,18 @@ object BookController extends Controller {
 			
 		}
 	}
+	
+	def getAllAvailableBooks: List[Book] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT id, title, language, pages FROM books WHERE date_back IS NULL").as(bookParser *)
+			
+		}
+	}
+	
+	def getAllBorrowedBooks: List[Book] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT id, title, language, pages FROM books WHERE date_back IS NOT NULL").as(bookParser *)
+			
+		}
+	}
 }
