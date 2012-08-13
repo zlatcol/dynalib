@@ -10,8 +10,8 @@
 		@inputText(bookForm("title"))
 		@inputText(bookForm("language"))
 		@inputText(bookForm("pages"))
-		<select id="author" name="author" multiple="multiple">
-			@for(author <- Author.getAuthors) {
+		<select id="author" name="author" multiple="multiple" size="@AuthorController.getNumberOfAuthors">
+			@for(author <- AuthorController.getAuthors) {
 				<option value="@author.id">@author.name</option>
 			}
 		</select>

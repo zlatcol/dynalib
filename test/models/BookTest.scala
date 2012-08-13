@@ -18,7 +18,7 @@ class BookTest extends Specification with Mockito {
 
 	"return a single book" in {
 	  running(FakeApplication()) {
-		val book = Book.getById(1).get
+		val book = BookController.getBookById(1).get
 			assert(book.isInstanceOf[Book])
 			book.id must equalTo(1)
 		}
@@ -26,14 +26,14 @@ class BookTest extends Specification with Mockito {
 
 	"should not find book" in {
 	  running(FakeApplication()) {
-		val book = Book.getById(-1).getOrElse("not found")
+		val book = BookController.getBookById(-1).getOrElse("not found")
 			book must equalTo("not found")
 		}
 	}
 	
 	"find list of books" in {
   	  running(FakeApplication()) {
-  	    val books = Book.getAll
+  	    val books = BookController.getAllBooks
   	    assert(books(0).isInstanceOf[Book])
   	  }
 	}

@@ -23,7 +23,7 @@ object DynaLib extends Controller {
 	 *	Självförklarande funktion. Kommentar onödig.
 	 */
 	def listAllBooks = Action {
-		val list = BookController.getAllBooks()
+		val list = BookController.getAllBooks
 		Ok(views.html.allBooks(list))
 	}
 			
@@ -86,7 +86,7 @@ object DynaLib extends Controller {
 	 * Hämta Bokinfo och skicka till book vyn
 	 */
 	def book(id: Int) = Action {
-		val book = BookController.getBook(id)
+		val book = BookController.getBookById(id)
 		val authors = AuthorController.getAuthorByBookId(id)
 		Ok(views.html.book(book, authors))
 	}
