@@ -22,16 +22,22 @@ object BookHelper {
 		)
 	)
 	
+<<<<<<< HEAD
 	/** Return book formuläret **/
+=======
+>>>>>>> Return books
 	val returnBookForm = Form(
 		"bookId" -> number
 	)
 	
+<<<<<<< HEAD
 	/** Filter book formuläret **/
 	val filterBooksForm = Form(
 		"language" -> nonEmptyText
 	)
 	
+=======
+>>>>>>> Return books
 	/** Felmeddelanden **/
 	val error_addBookForm = "Something went wrong"
 	
