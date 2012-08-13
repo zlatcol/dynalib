@@ -3,7 +3,6 @@ package controllers
 import play.api._
 import play.api.db._
 import play.api.Play.current
-
 import anorm._
 import anorm.SqlParser._
 import play.api.mvc._
@@ -12,6 +11,7 @@ import play.api.data._
 import play.api.data._
 import play.api.data.Forms._
 import models.User
+import java.util.Date
 
 object BookController extends Controller {
 	
@@ -27,7 +27,7 @@ object BookController extends Controller {
 	
 	def getBookById(id: Int): Option[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages FROM books WHERE id = {id}").on('id -> id).as(bookParser.singleOpt)
+			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE id = {id}").on('id -> id).as(bookParser.singleOpt)
 		}
 	}
 	
@@ -35,27 +35,29 @@ object BookController extends Controller {
   		get[Int]("id")~
   		get[String]("title")~
   		get[String]("language")~
-  		get[Int]("pages") map {
-  			case id~title~language~pages => new Book(id, title, language, pages)
+  		get[Int]("pages")~
+  		get[Option[String]]("borrowed_by")~
+  		get[Option[Date]]("date_back") map {
+  			case id~title~language~pages~borrowed_by~date_back => new Book(id, title, language, pages, borrowed_by, date_back)
   		}
  
 	def getAllBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages FROM books").as(bookParser *)
+			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books").as(bookParser *)
 			
 		}
 	}
 	
 	def getAllAvailableBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages FROM books WHERE date_back IS NULL").as(bookParser *)
+			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE date_back IS NULL").as(bookParser *)
 			
 		}
 	}
 	
 	def getAllBorrowedBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages FROM books WHERE date_back IS NOT NULL").as(bookParser *)
+			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE date_back IS NOT NULL").as(bookParser *)
 		}
 	}
 	

@@ -85,8 +85,7 @@ object DynaLib extends Controller {
 				val bookId = borrowBookForm._1
 				val userId = borrowBookForm._2
 				BookController.borrowBook(bookId, userId)
-				val list = BookController.getAllBooks
-				Ok(views.html.allBooks(list))
+				Redirect(routes.DynaLib.book(bookId))
 			}
 		)
 	}
@@ -104,8 +103,7 @@ object DynaLib extends Controller {
 	def addAuthor = Action {
 		Ok(views.html.addAuthor(AuthorHelper.addAuthorForm))
 	}
-	
-	
+
 	/** 
 	 * Hämta Bokinfo och skicka till book vyn
 	 */

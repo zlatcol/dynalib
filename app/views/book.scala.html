@@ -5,21 +5,26 @@
 @main("DynaLib: Bok") {
 	<h2>BokInfo:</h2>
 	@book.map { b =>
-		<b>Title:</b> @b.title <br/>
-		<b>Language:</b> @b.language <br/>
-		<b>Pages:</b> @b.pages <br/>
-		<b>Authors: </b> </br>
+		<b>Title:</b> @b.title <br />
+		<b>Language:</b> @b.language <br />
+		<b>Pages:</b> @b.pages <br />
+		<b>Authors: </b> <br />
 		@for(author <- authors) {
-			@author.name </br>
+			@author.name <br />
 		}
-		@form(routes.DynaLib.handleBorrowBookRequest) {
-			<input type="hidden" id="bookId" name="bookId" value="@b.id" >
-				<select id="userId" name="userId">
-					@for(user <- UserController.getUsers) {
-						<option value="@user.id">@user.name</option>
-					}
-				</select>
-			<input type="submit" value="Borrow">
+		<br />
+		@b.borrowedBy.map {_ => 
+			<b>Borrowed by @b.borrowedBy at @b.borrowedAt</b>
+		}.getOrElse {
+			@form(routes.DynaLib.handleBorrowBookRequest) {
+				<input type="hidden" id="bookId" name="bookId" value="@b.id" >
+					<select id="userId" name="userId">
+						@for(user <- UserController.getUsers) {
+							<option value="@user.id">@user.name</option>
+						}
+					</select>
+				<input type="submit" value="Borrow">
+			}
 		}
 	}.getOrElse { 
 		<i>Book not found :(</i>

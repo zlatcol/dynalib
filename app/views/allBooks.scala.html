@@ -5,7 +5,10 @@
 @main("DynaLib: Alla böcker") {
 	<h2><a href="/library">Alla böcker</a> - <a href="../borrowed">Utlånade böcker</a> - <a href="../available">Tillgängliga böcker</a></h2>
 	@for(book <- books) {
-
-		<b><a href="../library/@book.id">@book.title</b></a><br>
+		<a href="../library/@book.id"><b>@book.title</b></a>
+		@book.borrowedBy.map { _ => 
+			<i>(Borrowed by @book.borrowedBy)</i>
+		}.getOrElse {}
+		<br />
 	}
 }

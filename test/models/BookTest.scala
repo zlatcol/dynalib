@@ -9,7 +9,7 @@ import models.Book
 class BookTest extends Specification with Mockito {
   
 	"should be able to read/write fields from book" in {
-		val b = new Book(1, "Title", "English", 200)
+		val b = new Book(1, "Title", "English", 200, Option.empty, Option.empty)
 		b.id must equalTo(1)
 		b.title must equalTo("Title")
 		b.language must equalTo("English")
