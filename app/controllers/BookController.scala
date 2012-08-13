@@ -11,6 +11,7 @@ import models.Book
 import play.api.data._
 import play.api.data._
 import play.api.data.Forms._
+import models.User
 
 object BookController extends Controller {
 	
@@ -55,7 +56,13 @@ object BookController extends Controller {
 	def getAllBorrowedBooks: List[Book] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT id, title, language, pages FROM books WHERE date_back IS NOT NULL").as(bookParser *)
-			
+		}
+	}
+	
+	def borrowBook(bookId: Int, userId: Int) {
+		val user = UserController.getUserById(userId).getOrElse[User](new User(0, "Error"))
+		DB.withConnection { implicit c =>
+			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL 30 DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
 		}
 	}
 }

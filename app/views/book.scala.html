@@ -1,4 +1,6 @@
-@(book: Option[Book], authors: List[Author])
+@(book: Option[Book], authors: List[Author], users: List[User])
+
+@import helper._
 
 @main("DynaLib: Bok") {
 	<h2>BokInfo:</h2>
@@ -10,7 +12,18 @@
 		@for(author <- authors) {
 			@author.name </br>
 		}
+		@form(routes.DynaLib.handleBorrowBookRequest) {
+			<input type="hidden" id="bookId" name="bookId" value="@b.id" >
+				<select id="userId" name="userId">
+					@for(user <- UserController.getUsers) {
+						<option value="@user.id">@user.name</option>
+					}
+				</select>
+			<input type="submit" value="Borrow">
+		}
 	}.getOrElse { 
 		<i>Book not found :(</i>
-	}   
+	}
+	
+	
 }

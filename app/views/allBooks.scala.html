@@ -3,7 +3,7 @@
 @import helper._
 
 @main("DynaLib: Alla böcker") {
-	<h2><a href="/library">Alla böcker</a> - <a href="/library/borrowed">Utlånade böcker</a> - <a href="/library/available">Tillgängliga böcker</a></h2>
+	<h2><a href="/library">Alla böcker</a> - <a href="/borrowed">Utlånade böcker</a> - <a href="/available">Tillgängliga böcker</a></h2>
 	@for(book <- books) {
 
 		<b><a href="library/@book.id">@book.title</b></a><br>

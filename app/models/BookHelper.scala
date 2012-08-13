@@ -14,6 +14,14 @@ object BookHelper {
 		)
 	)
 	
+	/** Borrow book formuläret **/
+	val borrowBookForm = Form(
+		tuple(
+			"bookId" -> number,
+			"userId" -> number
+		)
+	)
+	
 	/** Felmeddelanden **/
 	val error_addBookForm = "Something went wrong"
 	

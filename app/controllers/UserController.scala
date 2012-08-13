@@ -26,7 +26,13 @@ object UserController {
 	
 	def getUsers: List[User] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, name FROM authors").as(userParser *)
+			SQL("SELECT id, name FROM users").as(userParser *)
+		}
+	}
+	
+	def getUserById(id: Int): Option[User] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT id, name FROM users WHERE id = {id}").on('id -> id).as(userParser.singleOpt)
 		}
 	}
 

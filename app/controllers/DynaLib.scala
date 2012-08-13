@@ -77,6 +77,21 @@ object DynaLib extends Controller {
 		)
 	}
 	
+	/** Tar emot borrow book requesten. Gör anrop för att ändra i DBn vilken book som är utlånad och till vem. **/
+	def handleBorrowBookRequest = Action { implicit request =>
+		println(request.body)
+		BookHelper.borrowBookForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.index()),
+			borrowBookForm => {
+				val bookId = borrowBookForm._1
+				val userId = borrowBookForm._2
+				BookController.borrowBook(bookId, userId)
+				val list = BookController.getAllBooks
+				Ok(views.html.allBooks(list))
+			}
+		)
+	}
+	
 	/**
 	 * Visa addBook vyn
 	 */
@@ -98,6 +113,7 @@ object DynaLib extends Controller {
 	def book(id: Int) = Action {
 		val book = BookController.getBookById(id)
 		val authors = AuthorController.getAuthorByBookId(id)
-		Ok(views.html.book(book, authors))
+		val users = UserController.getUsers
+		Ok(views.html.book(book, authors, users))
 	}
 }
