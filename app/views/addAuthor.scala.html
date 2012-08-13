@@ -1,0 +1,13 @@
+@(authorForm: Form[(Int, String)], msg: String = "")
+
+@import helper._
+
+@main("DynaLib") {
+	<h2>Add author</h2>
+	@msg
+	@form(routes.DynaLib.handleAddAuthorRequest) {
+		<input type="hidden" id="id" name="id" value="0" >
+		@inputText(authorForm("name"))
+		<input type="submit" value="Add">
+	}
+}

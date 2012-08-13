@@ -11,6 +11,7 @@ import anorm.SqlParser._
 import models.Book
 import models.Author
 import models.BookHelper
+import models.AuthorHelper
 
 object DynaLib extends Controller {
 	
@@ -28,9 +29,8 @@ object DynaLib extends Controller {
 			
 	/** 
 	 * Tar emot requesten från addBook viewn och skickar det vidare till BookControllern
-	 * result = Tuple2(title, pages)
 	 */
-	def add = Action { implicit request =>
+	def handleAddBookRequest = Action { implicit request =>
 		BookHelper.addBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
 			bookForm => {
@@ -43,11 +43,39 @@ object DynaLib extends Controller {
 	}
 	
 	/**
+	 * Tar emot requesten från addAuthor viewn och skickar det vidare till AuthorControllern
+	 */
+	def handleAddAuthorRequest = Action { implicit request =>
+		AuthorHelper.addAuthorForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.addAuthor(AuthorHelper.addAuthorForm, AuthorHelper.error_addAuthorForm)),
+			authorForm => {
+				val author = new Author(authorForm._1, authorForm._2)
+				val authorId = AuthorController.addAuthor(author)
+				var msg = ""
+				if (authorId > 0) {
+					msg = AuthorHelper.getAddedMsg(authorForm._2)
+				} else {
+					msg = "Adding author failed"
+				}
+				Ok(views.html.addAuthor(AuthorHelper.addAuthorForm, msg))
+			}
+		)
+	}
+	
+	/**
 	 * Visa addBook vyn
 	 */
 	def addBook = Action {
 		Ok(views.html.addBook(BookHelper.addBookForm))
 	}
+	
+	/**
+	 * Visa addAuthor vyn
+	 */
+	def addAuthor = Action {
+		Ok(views.html.addAuthor(AuthorHelper.addAuthorForm))
+	}
+	
 	
 	/** 
 	 * Hämta Bokinfo och skicka till book vyn

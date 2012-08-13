@@ -4,7 +4,6 @@ import org.specs2.mutable._
 import org.specs2.mock.Mockito
 import play.api.test._
 import play.api.test.Helpers._
-import controllers.DBHandler
 
 class DynaLibTest extends Specification with Mockito{
 	
@@ -35,6 +34,17 @@ class DynaLibTest extends Specification with Mockito{
 			charset(result) must beSome("utf-8")
 			contentAsString(result) must contain("Flickan som lekte med en sten")
 			}
+	}
+	
+	"add author page should render correctly" in {
+		running(FakeApplication()) {
+		val result = controllers.DynaLib.addAuthor()(FakeRequest())
+			status(result) must equalTo(OK)
+			contentType(result) must beSome("text/html")
+			charset(result) must beSome("utf-8")
+			contentAsString(result) must contain("Add author")
+			contentAsString(result) must contain("name")
+		}
 	}
 	
 }

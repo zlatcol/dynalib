@@ -36,4 +36,10 @@ object Author {
 			SQL("INSERT INTO book_author (bookId, authorId) VALUES ({bId}, {aId})").on('bId -> bookId, 'aId -> authorId).executeInsert()
 		}
 	}
+	
+	def addAuthor(author: Author): Option[Long] = {
+		DB.withConnection( implicit c =>
+			SQL("INSERT INTO authors (name) VALUES ({name})").on('name -> author.name).executeInsert()
+		)
+	}
 }

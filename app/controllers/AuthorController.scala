@@ -8,6 +8,12 @@ import play.api.data._
 
 object AuthorController {
 	
+	
+	def addAuthor(author: Author): Int = {
+		val result = Author.addAuthor(author).getOrElse(0)
+		Integer.parseInt(result.toString())
+	}
+	
 	def getAuthorByBookId(id: Int): List[Author] = {
 		Author.getByBookId(id)
 	}
