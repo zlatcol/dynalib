@@ -6,4 +6,4 @@ CREATE TABLE authors (id INT(5) NOT NULL AUTO_INCREMENT, name VARCHAR(255) NOT N
 
 # --- !Downs
 
-DROP TABLE authers;
+DROP TABLE authors;
