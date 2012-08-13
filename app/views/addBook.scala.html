@@ -10,10 +10,10 @@
 		@inputText(bookForm("title"))
 		@inputText(bookForm("language"))
 		@inputText(bookForm("pages"))
-		<select id="author" name="author">
-		@for(author <- Author.getAuthors) {
-			<option value="@author.id">@author.name</option>
-		}
+		<select id="author" name="author" multiple="multiple">
+			@for(author <- Author.getAuthors) {
+				<option value="@author.id">@author.name</option>
+			}
 		</select>
 		<input type="submit" value="Add">
 	}

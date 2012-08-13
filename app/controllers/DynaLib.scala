@@ -31,12 +31,17 @@ object DynaLib extends Controller {
 	 * Tar emot requesten från addBook viewn och skickar det vidare till BookControllern
 	 */
 	def handleAddBookRequest = Action { implicit request =>
+		
+		val authors = request.body.asFormUrlEncoded.get("author")
+		request.body.asFormUrlEncoded.drop(0)
 		BookHelper.addBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
 			bookForm => {
 				val book = new Book(bookForm._1, bookForm._2, bookForm._3, bookForm._4)
 				val bookId = BookController.addBook(book)
-				AuthorController.addBookToAuthor(bookId, bookForm._5)
+				for (author <- authors) {
+					AuthorController.addBookToAuthor(bookId, Integer.parseInt(author))
+				}
 				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(bookForm._2)))
 			}
 		)

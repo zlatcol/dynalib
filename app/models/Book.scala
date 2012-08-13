@@ -40,4 +40,6 @@ object Book {
 			SQL("INSERT INTO books (title, language, pages) VALUES ({title}, {language}, {pages})").on('title -> book.title, 'language -> book.language, 'pages -> book.pages).executeInsert()
 		}
 	}
+	
+	def test= {}
 }
