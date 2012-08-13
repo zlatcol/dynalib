@@ -5,8 +5,8 @@
 # Startsidan
 GET     /    	                    controllers.DynaLib.index
 GET		/library					controllers.DynaLib.listAllBooks
-GET		/available			controllers.DynaLib.listAvailableBooks
-GET		/borrowed			controllers.DynaLib.listBorrowedBooks
+GET		/available					controllers.DynaLib.listAvailableBooks
+GET		/borrowed					controllers.DynaLib.listBorrowedBooks
 GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor

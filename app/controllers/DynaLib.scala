@@ -79,7 +79,6 @@ object DynaLib extends Controller {
 	
 	/** Tar emot borrow book requesten. Gör anrop för att ändra i DBn vilken book som är utlånad och till vem. **/
 	def handleBorrowBookRequest = Action { implicit request =>
-		println(request.body)
 		BookHelper.borrowBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.index()),
 			borrowBookForm => {
