@@ -1,9 +1,9 @@
-# playapp schema
+# PlayApp database
 
-# --- !Ups
+# ---!Ups
 
-ALTER TABLE results ADD COLUMN operation varchar(255) not null default 'error';
+ALTER TABLE books ADD COLUMN pages INT NOT NULL DEFAULT '0';
 
-# --- !Downs
+# ---!Downs
 
-ALTER TABLE results DROP COLUMN operation;
+ALTER TABLE books DROP COLUMN pages;

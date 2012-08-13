@@ -1,7 +1,9 @@
-# ---!Ups
+# PlayApp Database
 
-insert into books (title) values ('Flickan som lekte med en sten'),('Stenen som lekte med en bil'),('Bilen som var scrum master inom ett agilt projekt'),('Agila projektet som mest av allt ville vara en sten');
+# --- !Ups
 
-# ---!Downs
+CREATE TABLE authors (id INT(5) NOT NULL AUTO_INCREMENT, name VARCHAR(255) NOT NULL DEFAULT '', PRIMARY KEY (id))ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-delete from books;
+# --- !Downs
+
+DROP TABLE authers;

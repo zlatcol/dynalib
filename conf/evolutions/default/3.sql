@@ -1,9 +1,9 @@
-# PlayApp Database
+# PlayApp database
 
-# --- !Ups
+# ---!Ups
 
-CREATE TABLE books (id INT(5) NOT NULL AUTO_INCREMENT, title VARCHAR(255) NOT NULL DEFAULT '', PRIMARY KEY (id))ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE books ADD COLUMN language varchar(50) NOT NULL DEFAULT 'English';
 
-# --- !Downs
+# ---!Downs
 
-DROP TABLE books;
+ALTER TABLE books DROP COLUMN language;

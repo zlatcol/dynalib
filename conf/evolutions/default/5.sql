@@ -1,9 +1,9 @@
-# PlayApp database
+# PlayApp Database
 
-# ---!Ups
+# --- !Ups
 
-ALTER TABLE books ADD COLUMN pages INT NOT NULL DEFAULT '0';
+CREATE TABLE book_author (bookId INT(5) NOT NULL, authorId INT(5) NOT NULL , KEY book_author_idx (bookId, authorId), KEY author_book_idx (authorId, bookId)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-# ---!Downs
+# --- !Downs
 
-ALTER TABLE books DROP COLUMN pages;
+DROP TABLE book_author;
