@@ -3,7 +3,7 @@
 # --- !Ups
 
 #Books
-INSERT INTO books (title, pages, language) VALUES ('Flickan som lekte med en sten',300,'English'),('Stenen som lekte med en bil',334,'English'),('Bilen som var scrum master inom ett agilt projekt',1334,'English'),('Agila projektet som mest av allt ville vara en sten', 678,'English'),('Stenen som lekte med grus',245,'English'),('The girl who played with a rock',1368,'English'),('Berg, en illustrerad guide till hur man undviker dem',767,'Svenska'),('Who to write a book as a single author',425,'English'),('How to write a book as a team of authors',722,'English');
+INSERT INTO books (title, pages, language) VALUES ('Flickan som lekte med en sten',300,'English'),('Stenen som lekte med en bil',334,'English'),('Bilen som var scrum master inom ett agilt projekt',1334,'English'),('Agila projektet som mest av allt ville vara en sten', 678,'English'),('Stenen som lekte med grus',245,'English'),('The girl who played with a rock',1368,'English'),('Berg, en illustrerad guide till hur man undviker dem',767,'Swedish'),('Who to write a book as a single author',425,'English'),('How to write a book as a team of authors',722,'English');
 #Authors
 INSERT INTO authors (name) VALUES ('Jan Guillou'),('Stephen King'),('George RR Martin'),('Albert Einstein'),('Jean-Paul Sartre'),('Henrik Kniberg'),('Paulo Coelho');
 #Book -> Authors

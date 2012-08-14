@@ -102,6 +102,18 @@ object DynaLib extends Controller {
 		)
 	}
 	
+	/** Tar emot filter book by language requesten.**/
+	def handleFilterBooksByLanguageRequest = Action { implicit request =>
+		BookHelper.filterBooksForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.index()),
+			filterBookForm => {
+				val language = filterBookForm
+				val listOfBooks = BookController.getBooksByLanguage(language)
+				Ok(views.html.allBooks(listOfBooks))
+			}
+		)
+	}
+	
 	/**
 	 * Visa addBook vyn
 	 */

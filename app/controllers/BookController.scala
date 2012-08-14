@@ -48,6 +48,12 @@ object BookController extends Controller {
 		}
 	}
 	
+	def getBooksByLanguage(language: String): List[Book] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE language = {language}").on('language -> language).as(bookParser *)
+		}
+	}
+	
 	def getAllAvailableBooks: List[Book] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE date_back IS NULL").as(bookParser *)

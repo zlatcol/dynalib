@@ -11,4 +11,13 @@
 		}.getOrElse {}
 		<br />
 	}
+	@form(routes.DynaLib.handleFilterBooksByLanguageRequest) {
+		<select name="language">
+		@for(language <- SelectOptions.languages) {
+			<option value="@language">@language</option>
+			
+		}
+		</select>
+		<input type="submit" value="Show only">
+	}
 }
