@@ -14,7 +14,7 @@
 		}
 		<br />
 		@b.borrowedBy.map {_ => 
-			<b>Borrowed by @b.borrowedBy at @b.borrowedAt</b>
+			<b>Borrowed by @b.borrowedBy. Will be returned @b.borrowedAt</b>
 			@form(routes.DynaLib.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id">
 				<input type="submit" value="Return">

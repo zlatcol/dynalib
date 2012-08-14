@@ -2,7 +2,7 @@
 
 # --- !Ups
 
-ALTER TABLE books ADD COLUMN borrowed_by varchar(50) default "", ADD COLUMN date_back DATE default null;
+ALTER TABLE books ADD COLUMN borrowed_by varchar(50) default NULL, ADD COLUMN date_back DATE default null;
 
 # --- !Downs
 

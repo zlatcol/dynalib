@@ -97,10 +97,7 @@ object DynaLib extends Controller {
 			returnBookForm => {
 				val bookId = returnBookForm
 				BookController.returnBook(bookId)
-				val book = BookController.getBookById(bookId)
-				val authors = AuthorController.getAuthorByBookId(bookId)
-				val users = UserController.getUsers
-				Ok(views.html.book(book, authors, users))
+				Redirect(routes.DynaLib.book(bookId))
 			}
 		)
 	}
