@@ -71,6 +71,7 @@ object BookController extends Controller {
 	}
 	
 	def returnBook(bookId: Int) {
+<<<<<<< HEAD
 		killListCache
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET borrowed_by = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
@@ -82,4 +83,10 @@ object BookController extends Controller {
 		Cache.set("allBooks", None)
 		Cache.set("allAvailable", None)
 	}
+=======
+		DB.withConnection { implicit c =>
+			SQL("UPDATE books SET borrowed_by = null, date_back = null WHERE id = {id}").on('id -> bookId).executeUpdate()
+		}
+	}
+>>>>>>> Return books
 }
