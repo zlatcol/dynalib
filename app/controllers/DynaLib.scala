@@ -12,6 +12,7 @@ import models.Book
 import models.Author
 import models.BookHelper
 import models.AuthorHelper
+import play.api.cache.Cache
 
 object DynaLib extends Controller {
 	
@@ -23,17 +24,25 @@ object DynaLib extends Controller {
 	 *	Självförklarande funktion. Kommentar onödig.
 	 */
 	def listAllBooks = Action {
-		val list = BookController.getAllBooks
+		
+		val list: List[Book] = Cache.getOrElse[List[Book]]("allBooks", 600) {
+			BookController.getAllBooks
+		}
 		Ok(views.html.allBooks(list))
 	}
 	
 	def listAvailableBooks = Action {
-		val list = BookController.getAllAvailableBooks
+		
+		val list: List[Book] = Cache.getOrElse[List[Book]]("allAvailable", 600) {
+			BookController.getAllAvailableBooks
+		}
 		Ok(views.html.allBooks(list))
 	}
 	
 	def listBorrowedBooks = Action {
-		val list = BookController.getAllBorrowedBooks
+		val list: List[Book] = Cache.getOrElse[List[Book]]("allBorrowed", 600) {
+			BookController.getAllBorrowedBooks
+		}
 		Ok(views.html.allBooks(list))
 	}
 			
@@ -98,18 +107,6 @@ object DynaLib extends Controller {
 				val bookId = returnBookForm
 				BookController.returnBook(bookId)
 				Redirect(routes.DynaLib.book(bookId))
-			}
-		)
-	}
-	
-	/** Tar emot filter book by language requesten.**/
-	def handleFilterBooksByLanguageRequest = Action { implicit request =>
-		BookHelper.filterBooksForm.bindFromRequest.fold(
-			errors => BadRequest(views.html.index()),
-			filterBookForm => {
-				val language = filterBookForm
-				val listOfBooks = BookController.getBooksByLanguage(language)
-				Ok(views.html.allBooks(listOfBooks))
 			}
 		)
 	}

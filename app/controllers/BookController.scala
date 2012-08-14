@@ -12,6 +12,7 @@ import play.api.data._
 import play.api.data.Forms._
 import models.User
 import java.util.Date
+import play.api.cache.Cache
 
 object BookController extends Controller {
 	
@@ -22,6 +23,7 @@ object BookController extends Controller {
 		var id = DB.withConnection { implicit c =>
 			SQL("INSERT INTO books (title, language, pages) VALUES ({title}, {language}, {pages})").on('title -> book.title, 'language -> book.language, 'pages -> book.pages).executeInsert()
 		}.getOrElse(0)
+		killListCache
 		Integer.parseInt(id.toString())
 	}
 	
@@ -44,13 +46,6 @@ object BookController extends Controller {
 	def getAllBooks: List[Book] = {
 		DB.withConnection { implicit c =>
 			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books").as(bookParser *)
-			
-		}
-	}
-	
-	def getBooksByLanguage(language: String): List[Book] = {
-		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE language = {language}").on('language -> language).as(bookParser *)
 		}
 	}
 	
@@ -69,14 +64,22 @@ object BookController extends Controller {
 	
 	def borrowBook(bookId: Int, userId: Int) {
 		val user = UserController.getUserById(userId).getOrElse[User](new User(0, "Error"))
+		killListCache
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL 30 DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
 		}
 	}
 	
 	def returnBook(bookId: Int) {
+		killListCache
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET borrowed_by = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
 		}
+	}
+	
+	def killListCache() {
+		Cache.set("allBorrowed", None)
+		Cache.set("allBooks", None)
+		Cache.set("allAvailable", None)
 	}
 }
