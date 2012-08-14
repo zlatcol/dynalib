@@ -28,7 +28,7 @@ object DynaLib extends Controller {
 		val list: List[Book] = Cache.getOrElse[List[Book]]("allBooks", 600) {
 			BookController.getAllBooks
 		}
-		Ok(views.html.allBooks(list))
+		Ok(views.html.allBooks("All Books", list))
 	}
 	
 	def listAvailableBooks = Action {
@@ -36,14 +36,14 @@ object DynaLib extends Controller {
 		val list: List[Book] = Cache.getOrElse[List[Book]]("allAvailable", 600) {
 			BookController.getAllAvailableBooks
 		}
-		Ok(views.html.allBooks(list))
+		Ok(views.html.allBooks("Available Books", list))
 	}
 	
 	def listBorrowedBooks = Action {
 		val list: List[Book] = Cache.getOrElse[List[Book]]("allBorrowed", 600) {
 			BookController.getAllBorrowedBooks
 		}
-		Ok(views.html.allBooks(list))
+		Ok(views.html.allBooks("Borrowed Books", list))
 	}
 			
 	/** 

@@ -2,8 +2,7 @@
 
 @import helper._
 
-@main("DynaLib") {
-	<h2>Add book!</h2>
+@main("Add book") {
 	@msg
 	@form(routes.DynaLib.handleAddBookRequest) {
 		<input type="hidden" id="id" name="id" value="0" >

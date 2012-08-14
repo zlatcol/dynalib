@@ -1,13 +1,12 @@
-@(books: List[Book])
+@(title: String, books: List[Book])
 
 @import helper._
 
-@main("DynaLib: Alla böcker") {
-	<h2><a href="/library">Alla böcker</a> - <a href="../borrowed">Utlånade böcker</a> - <a href="../available">Tillgängliga böcker</a></h2>
+@main(title) {
 	@for(book <- books) {
 		<a href="../library/@book.id"><b>@book.title</b></a>
 		@book.borrowedBy.map { _ => 
-			<i>(Borrowed by @book.borrowedBy)</i>
+			<span class="badge badge-info">Borrowed by @book.borrowedBy</span>
 		}.getOrElse {}
 		<br />
 	}

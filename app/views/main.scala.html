@@ -4,20 +4,66 @@
 <html>
     <head>
         <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("img/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
     </head>
     <body>
-		<header class="topbar">
-			<a href="@routes.DynaLib.index()">DynaLib</a> -
-			<a href="@routes.DynaLib.listAllBooks()">All books</a> -
-			<a href="@routes.DynaLib.addBook()">Add book</a> -
-			<a href="@routes.DynaLib.addAuthor()">Add author</a>
+		<header class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+				
+          			<a class="brand" href="@routes.DynaLib.index()">DynaLib</a>
+          			
+          			<div class="btn-group pull-right">
+            			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+	              			<i class="icon-user"></i> Username
+	              			<span class="caret"></span>
+            			</a>
+            			<ul class="dropdown-menu">
+			            	<li><a href="@routes.DynaLib.listBorrowedBooks()">Borrowed books</a></li>
+			            	<li class="divider"></li>
+              				<li><a href="@routes.DynaLib.index()">Sign Out</a></li>
+            			</ul>
+          			</div>
+				</div>
+			</div>
         </header>
-        
-        <section id="content">
-            @content
-        </section>
+
+		<section class="span2 well sidebar-nav">
+			<ul class="nav nav-list">
+				<li class="nav-header">Library</li>
+				<li>
+					<a href="@routes.DynaLib.listAllBooks()"><i class="icon-book"></i> All books</a>
+				</li>
+				<li>
+					<a href="@routes.DynaLib.listAvailableBooks()"><i class="icon-book"></i> All available books</a>
+				</li>
+				<li>
+					<a href="@routes.DynaLib.listBorrowedBooks()"><i class="icon-book"></i> All borrowed books</a>
+				</li>
+				
+				<li class="nav-header">Admin</li>
+				<li>
+					<a href="@routes.DynaLib.addBook()"><i class="icon-book"></i> Add book</a>
+				</li>
+				<li>
+					<a href="@routes.DynaLib.addAuthor()"><i class="icon-pencil"></i> Add author</a>
+				</li>
+			</ul>
+		</section>
+		
+		<section class="span10">
+			<div class="page-header">
+				<h1>@title</h1>
+			</div>
+			@content
+		</section>
+
+		<script src="@routes.Assets.at("javascripts/main.js")"></script>
+		<script src="@routes.Assets.at("javascripts/bootstrap-dropdown.js")"></script>
     </body>
 </html>

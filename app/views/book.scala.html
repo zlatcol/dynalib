@@ -2,9 +2,9 @@
 
 @import helper._
 
-@main("DynaLib: Bok") {
-	<h2>BokInfo:</h2>
-	@book.map { b =>
+@book.map { b =>
+	@main(b.title) {
+	
 		<b>Title:</b> @b.title <br />
 		<b>Language:</b> @b.language <br />
 		<b>Pages:</b> @b.pages <br />
@@ -30,9 +30,9 @@
 				<input type="submit" value="Borrow">
 			}
 		}
-	}.getOrElse { 
-		<i>Book not found :(</i>
 	}
-	
-	
+}.getOrElse { 
+	@main("No book found") {
+	}
 }
+
