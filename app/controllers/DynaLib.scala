@@ -90,6 +90,21 @@ object DynaLib extends Controller {
 		)
 	}
 	
+	/** Tar emot return book requesten. Gör anrop mot DBn som sätter att boken är tillbaka och dylikt **/
+	def handleReturnBookRequest = Action { implicit request =>
+		BookHelper.returnBookForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.index()),
+			returnBookForm => {
+				val bookId = returnBookForm
+				BookController.returnBook(bookId)
+				val book = BookController.getBookById(bookId)
+				val authors = AuthorController.getAuthorByBookId(bookId)
+				val users = UserController.getUsers
+				Ok(views.html.book(book, authors, users))
+			}
+		)
+	}
+	
 	/**
 	 * Visa addBook vyn
 	 */

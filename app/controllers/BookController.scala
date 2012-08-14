@@ -67,4 +67,10 @@ object BookController extends Controller {
 			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL 30 DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
 		}
 	}
+	
+	def returnBook(bookId: Int) {
+		DB.withConnection { implicit c =>
+			SQL("UPDATE books SET borrowed_by = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
+		}
+	}
 }

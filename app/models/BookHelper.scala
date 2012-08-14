@@ -22,6 +22,11 @@ object BookHelper {
 		)
 	)
 	
+	/** Return book formuläret **/
+	val returnBookForm = Form(
+		"bookId" -> number
+	)
+	
 	/** Felmeddelanden **/
 	val error_addBookForm = "Something went wrong"
 	
