@@ -98,16 +98,6 @@ object DynaLib extends Controller {
 			}
 		)
 	}
-
-	def handleReturnBookRequest = Action { implicit request =>
-		BookHelper.returnBookForm.bindFromRequest.fold(
-			errors => BadRequest(views.html.index()),
-			bookId => {
-				BookController.returnBook(bookId)
-				Redirect(routes.DynaLib.book(bookId))
-			}
-		)
-	}
 	
 	/** Tar emot return book requesten. Gör anrop mot DBn som sätter att boken är tillbaka och dylikt **/
 	def handleReturnBookRequest = Action { implicit request =>
