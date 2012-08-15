@@ -1,4 +1,4 @@
-@(book: Option[Book], authors: List[Author], users: List[User])
+@(book: Option[Book], authors: List[Author],categories: List[Category], users: List[User])
 
 @import helper._
 
@@ -11,6 +11,11 @@
 		<b>Authors: </b> <br />
 		@for(author <- authors) {
 			@author.name <br />
+		}
+		<br />
+		<b>Category: </b> <br />
+		@for(category <- categories) {
+			@category.name <br />
 		}
 		<br />
 		@b.borrowedBy.map {_ => 

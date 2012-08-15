@@ -16,6 +16,11 @@
 				<option value="@author.id">@author.name</option>
 			}
 		</select>
+		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
+			@for(category <- CategoryController.getCategories) {
+				<option value="@category.id">@category.name</option>
+			}
+		</select>
 		<input type="submit" value="Add" class="btn"></input>
 	}
 	<script>

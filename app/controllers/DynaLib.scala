@@ -52,7 +52,8 @@ object DynaLib extends Controller {
 	def handleAddBookRequest = Action { implicit request =>
 		
 		val authors = request.body.asFormUrlEncoded.get("author")
-		request.body.asFormUrlEncoded.drop(0)
+		val categories = request.body.asFormUrlEncoded.get("category")
+
 		BookHelper.addBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
 			bookForm => {
@@ -60,6 +61,9 @@ object DynaLib extends Controller {
 				val bookId = BookController.addBook(book)
 				for (author <- authors) {
 					AuthorController.addBookToAuthor(bookId, Integer.parseInt(author))
+				}
+				for (category <- categories) {
+					CategoryController.addCategoryToBook(bookId, Integer.parseInt(category))
 				}
 				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(bookForm._2)))
 			}
@@ -131,7 +135,8 @@ object DynaLib extends Controller {
 	def book(id: Int) = Action {
 		val book = BookController.getBookById(id)
 		val authors = AuthorController.getAuthorByBookId(id)
+		val categories = CategoryController.getCategoryByBookId(id)
 		val users = UserController.getUsers
-		Ok(views.html.book(book, authors, users))
+		Ok(views.html.book(book, authors, categories, users))
 	}
 }
