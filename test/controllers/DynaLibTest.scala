@@ -21,7 +21,6 @@ class DynaLibTest extends Specification with Mockito{
 			status(result) must equalTo(OK)
 			contentType(result) must beSome("text/html")
 			charset(result) must beSome("utf-8")
-			contentAsString(result) must contain("Add book!")
 			contentAsString(result) must contain("title")
 			contentAsString(result) must contain("pages")
 		}
