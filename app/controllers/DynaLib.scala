@@ -18,6 +18,7 @@ import models.SearchHelper
 object DynaLib extends Controller {
 	
 	def index() = Action {
+		//A comment. 
 		Ok(views.html.index())
 	}
 	
