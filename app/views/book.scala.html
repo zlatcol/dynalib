@@ -37,12 +37,9 @@
 					</select><br/>
 					For how long: 
 					<select id="days" name="days">
-						<option value="7">A week</option>
-						<option value="14">Two weeks</option>
-						<option value="21">Three weeks</option>
-						<option value="30">A month</option>
-						<option value="60">Two week</option>
-						<option value="90">Three months</option>
+						@for(option <- SelectOptions.timePeriods) {
+						<option value="@option._1">@option._2</option>
+						}
 					</select>
 					<br/>
 					<br/>
