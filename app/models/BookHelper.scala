@@ -19,7 +19,8 @@ object BookHelper {
 	val borrowBookForm = Form(
 		tuple(
 			"bookId" -> number,
-			"userId" -> number
+			"userId" -> number,
+			"days" -> number
 		)
 	)
 	

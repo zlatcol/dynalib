@@ -62,11 +62,11 @@ object BookController extends Controller {
 		}
 	}
 	
-	def borrowBook(bookId: Int, userId: Int) {
+	def borrowBook(bookId: Int, userId: Int, days: Int) {
 		val user = UserController.getUserById(userId).getOrElse[User](new User(0, "Error"))
 		killListCache
 		DB.withConnection { implicit c =>
-			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL 30 DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
+			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL "+days+" DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
 		}
 	}
 	

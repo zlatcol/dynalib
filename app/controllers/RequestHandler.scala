@@ -64,7 +64,8 @@ object RequestHandler extends Controller{
 			borrowBookForm => {
 				val bookId = borrowBookForm._1
 				val userId = borrowBookForm._2
-				BookController.borrowBook(bookId, userId)
+				val days = borrowBookForm._3
+				BookController.borrowBook(bookId, userId, days)
 				Redirect(routes.DynaLib.book(bookId))
 			}
 		)

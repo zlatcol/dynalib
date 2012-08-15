@@ -22,16 +22,30 @@
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
 				<b>Borrowed by @b.borrowedBy. Will be returned @b.borrowedAt</b>
+				<br/>
+				<br/>
 				<input type="submit" value="Return" class="btn"></input>
 			}
 		}.getOrElse {
 			@form(routes.RequestHandler.handleBorrowBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
+					Who:
 					<select id="userId" name="userId">
 						@for(user <- UserController.getUsers) {
 							<option value="@user.id">@user.name</option>
 						}
+					</select><br/>
+					For how long: 
+					<select id="days" name="days">
+						<option value="7">A week</option>
+						<option value="14">Two weeks</option>
+						<option value="21">Three weeks</option>
+						<option value="30">A month</option>
+						<option value="60">Two week</option>
+						<option value="90">Three months</option>
 					</select>
+					<br/>
+					<br/>
 				<input type="submit" value="Borrow" class="btn"></input>
 			}
 		}
