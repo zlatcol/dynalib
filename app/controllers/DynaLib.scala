@@ -13,6 +13,7 @@ import models.Author
 import models.BookHelper
 import models.AuthorHelper
 import play.api.cache.Cache
+import models.SearchHelper
 
 object DynaLib extends Controller {
 	
@@ -44,6 +45,10 @@ object DynaLib extends Controller {
 			BookController.getAllBorrowedBooks
 		}
 		Ok(views.html.allBooks("Borrowed Books", list))
+	}
+	
+	def search = Action {
+		Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
 	}
 			
 	/** 
@@ -111,6 +116,28 @@ object DynaLib extends Controller {
 				val bookId = returnBookForm
 				BookController.returnBook(bookId)
 				Redirect(routes.DynaLib.book(bookId))
+			}
+		)
+	}
+	
+	def handleSearchByAuthor = Action { implicit request =>
+		SearchHelper.authorSearchForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.index()),
+			authorSearchForm => {
+				val authorId = authorSearchForm
+				val searchResults = SearchController.searchByAuthor(authorId)
+				Ok(views.html.results(searchResults))
+			}
+		)
+	}
+	
+	def handleSearchByCategory = Action { implicit request =>
+		SearchHelper.categorySearchForm.bindFromRequest.fold(
+			errors => BadRequest(views.html.index()),
+			categorySearchForm => {
+				val categoryId = categorySearchForm
+				val searchResults = SearchController.searchByCategory(categoryId)
+				Ok(views.html.results(searchResults))
 			}
 		)
 	}

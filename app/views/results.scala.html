@@ -1,0 +1,13 @@
+@(books: List[Book])
+
+@import helper._
+
+@main("Search results") {
+	@for(book <- books) {
+		<a href="../library/@book.id"><b>@book.title</b></a>
+		@book.borrowedBy.map { _ => 
+			<span class="badge badge-info">Borrowed by @book.borrowedBy</span>
+		}.getOrElse {}
+		<br />
+	}
+}

@@ -1,0 +1,23 @@
+@(authorSearchForm: Form[Int], categorySearchForm: Form[Int])
+
+@import helper._
+
+@main("Search") {
+	@form(routes.DynaLib.handleSearchByAuthor){
+		<select name="authorId">
+			@for(author <- AuthorController.getAuthors) {
+				<option value="@author.id">@author.name</option>
+			}
+		</select>
+		<input type="submit" value="Search by author" class="btn">
+	}
+	
+	@form(routes.DynaLib.handleSearchByCategory){
+		<select name="categoryId">
+			@for(category <- CategoryController.getCategories) {
+				<option value="@category.id">@category.name</option>
+			}
+		</select>
+		<input type="submit" value="Search by category" class="btn">
+	}
+}
