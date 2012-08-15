@@ -1,6 +1,7 @@
 package models
 import play.api.data._
 import play.api.data.Forms._
+import controllers.CategoryController
 
 object BookHelper {
 	/** Add book formuläret **/
@@ -37,6 +38,16 @@ object BookHelper {
 	
 	def getAddedMsg(title: String): String = {
 		return "Book: "+title+" added"
+	}
+	
+	def getSizeOfMultiChoice(): Int = {
+		var size = 0
+		if(CategoryController.getNumberOfCategories() > 10) {
+			size = 10
+		} else {
+			size = CategoryController.getNumberOfCategories()
+		}
+		size
 	}
 
 }
