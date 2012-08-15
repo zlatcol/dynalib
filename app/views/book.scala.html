@@ -19,13 +19,13 @@
 		}
 		<br />
 		@b.borrowedBy.map {_ => 
-			@form(routes.DynaLib.handleReturnBookRequest) {
+			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
 				<b>Borrowed by @b.borrowedBy. Will be returned @b.borrowedAt</b>
 				<input type="submit" value="Return" class="btn"></input>
 			}
 		}.getOrElse {
-			@form(routes.DynaLib.handleBorrowBookRequest) {
+			@form(routes.RequestHandler.handleBorrowBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
 					<select id="userId" name="userId">
 						@for(user <- UserController.getUsers) {

@@ -3,7 +3,7 @@
 @import helper._
 
 @main("Search") {
-	@form(routes.DynaLib.handleSearchByAuthor){
+	@form(routes.RequestHandler.handleSearchByAuthor){
 		<select name="authorId">
 			@for(author <- AuthorController.getAuthors) {
 				<option value="@author.id">@author.name</option>
@@ -12,7 +12,7 @@
 		<input type="submit" value="Search by author" class="btn">
 	}
 	
-	@form(routes.DynaLib.handleSearchByCategory){
+	@form(routes.RequestHandler.handleSearchByCategory){
 		<select name="categoryId">
 			@for(category <- CategoryController.getCategories) {
 				<option value="@category.id">@category.name</option>

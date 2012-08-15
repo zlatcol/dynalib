@@ -4,7 +4,7 @@
 
 @main("Add book") {
 	@msg
-	@form(routes.DynaLib.handleAddBookRequest) {
+	@form(routes.RequestHandler.handleAddBookRequest) {
 		<input type="hidden" id="id" name="id" value="0" >
 		@inputText(bookForm("title"))
 		@select(bookForm("language"), options = options(SelectOptions.languages))

@@ -12,12 +12,12 @@ GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 
-POST	/doAddBook					controllers.DynaLib.handleAddBookRequest
-POST	/doAddAuthor				controllers.DynaLib.handleAddAuthorRequest
-POST	/doBorrow					controllers.DynaLib.handleBorrowBookRequest
-POST	/doReturn					controllers.DynaLib.handleReturnBookRequest
-POST	/doSearchByAuthor			controllers.DynaLib.handleSearchByAuthor
-POST 	/dosearchByCategory			controllers.DynaLib.handleSearchByCategory
+POST	/doAddBook					controllers.RequestHandler.handleAddBookRequest
+POST	/doAddAuthor				controllers.RequestHandler.handleAddAuthorRequest
+POST	/doBorrow					controllers.RequestHandler.handleBorrowBookRequest
+POST	/doReturn					controllers.RequestHandler.handleReturnBookRequest
+POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
+POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
