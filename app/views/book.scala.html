@@ -17,7 +17,12 @@
 		@for(category <- categories) {
 			@category.name <br />
 		}
-		<br />
+		<br/>
+		@form(routes.RequestHandler.handleEditBookRequest) {
+			<input type="hidden" value="@b.id" name="id">
+			<input type="submit" value="Edit book" class="btn"/>
+		}
+		<br/>
 		@b.borrowedBy.map {_ => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
@@ -28,6 +33,7 @@
 			}
 		}.getOrElse {
 			@form(routes.RequestHandler.handleBorrowBookRequest) {
+			<h2>Borrow book</h2>
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
 					Who:
 					<select id="userId" name="userId">

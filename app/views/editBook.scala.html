@@ -1,0 +1,37 @@
+@(book: Option[Book], authors: List[Author],categories: List[Category], categoryIds: List[Int], authorIds: List[Int])
+
+@import helper._
+
+@book.map { b =>
+	@main("Edit book") {
+		@form(routes.RequestHandler.handlePerfomEditRequest) {
+		<input type="hidden" name="id" value="@b.id"/>
+		Title: <input type="text" name="title" value="@b.title"><br/>
+		Pages: <input type="text" name="pages" value="@b.pages"><br/>
+		Language: <input type="text" value="@b.language" name="language"><br/>
+		Category:<br/>
+		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
+			@for(category <- CategoryController.getCategories) {
+				@if(categoryIds.contains(category.id)) {
+					<option value="@category.id" selected="selected">@category.name</option>
+				} else {
+					<option value="@category.id">@category.name</option>
+				}
+			}
+		</select><br/>
+		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
+			@for(author <- AuthorController.getAuthors) {
+				@if(authorIds.contains(author.id)) {
+					<option value="@author.id" selected="selected">@author.name</option>
+				} else {
+					<option value="@author.id">@author.name</option>
+				}
+			}
+		</select>
+		<input type="submit" value="Save changes" class="btn"/>
+		}
+	}
+}.getOrElse { 
+	@main("No book found") {
+	}
+}

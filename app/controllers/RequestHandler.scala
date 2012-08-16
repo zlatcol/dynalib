@@ -1,5 +1,6 @@
 package controllers
 import play.api._
+import scala.collection.mutable.ListBuffer
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
@@ -13,6 +14,7 @@ import models.BookHelper
 import models.AuthorHelper
 import play.api.cache.Cache
 import models.SearchHelper
+import models.Book
 
 object RequestHandler extends Controller{
 	
@@ -103,6 +105,39 @@ object RequestHandler extends Controller{
 				Ok(views.html.results(searchResults))
 			}
 		)
+	}
+	
+	def handleEditBookRequest = Action {implicit request =>
+		val id = Integer.parseInt(request.body.asFormUrlEncoded.get("id").head)
+		val book = BookController.getBookById(id)
+		
+		val authors = AuthorController.getAuthorByBookId(id)
+		var tempAuthors = ListBuffer[Int]()
+		authors.foreach(author => tempAuthors+= author.id)
+		val authorIds = tempAuthors.toList
+		
+		val categories = CategoryController.getCategoryByBookId(id)
+		var tempCategories = ListBuffer[Int]()
+		categories.foreach(category => tempCategories+=category.id)
+		val categoryIds = tempCategories.toList
+		
+		Ok(views.html.editBook(book, authors, categories, categoryIds, authorIds))
+	}
+	
+	def handlePerfomEditRequest = Action { implicit request =>
+		
+		val id = Integer.parseInt(request.body.asFormUrlEncoded.get("id").head)
+		val title = request.body.asFormUrlEncoded.get("title").head
+		val pages = Integer.parseInt(request.body.asFormUrlEncoded.get("pages").head)
+		val language = request.body.asFormUrlEncoded.get("language").head
+		val authors = request.body.asFormUrlEncoded.get("author").toList
+		val categories = request.body.asFormUrlEncoded.get("category").toList
+		
+		val book = new Book(id, title, language, pages)
+		
+		BookController.editBook(book, authors, categories)
+		
+		Redirect(routes.DynaLib.book(id))
 	}
 
 }
