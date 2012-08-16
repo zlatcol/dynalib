@@ -130,16 +130,12 @@ object RequestHandler extends Controller{
 		BookHelper.editBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.index()),
 			form => {
-				val id = form._1
-				val title = form._2
-				val language = form._3
-				val pages = form._4
 				val authors = request.body.asFormUrlEncoded.get("author").toList
 				val categories = request.body.asFormUrlEncoded.get("category").toList
 				
-				val book = new Book(id, title, language, pages)
+				val book = new Book(form._1, form._2, form._3, form._4)
 				BookController.editBook(book, authors, categories)
-				Redirect(routes.DynaLib.book(id))
+				Redirect(routes.DynaLib.book(form._1))
 			}
 		)
 	}
