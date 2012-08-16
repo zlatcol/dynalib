@@ -6,10 +6,10 @@
 	@main("Edit book") {
 		@form(routes.RequestHandler.handlePerfomEditRequest) {
 		<input type="hidden" name="id" value="@b.id"/>
-		Title: <input type="text" name="title" value="@b.title"><br/>
-		Pages: <input type="text" name="pages" value="@b.pages"><br/>
-		Language: <input type="text" value="@b.language" name="language"><br/>
-		Category:<br/>
+		<b>Title</b>: <input type="text" name="title" value="@b.title"><br/>
+		<b>Pages</b>: <input type="text" name="pages" value="@b.pages"><br/>
+		<b>Language</b>: <input type="text" value="@b.language" name="language"><br/>
+		<b>Category</b>:<br/>
 		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
 			@for(category <- CategoryController.getCategories) {
 				@if(categoryIds.contains(category.id)) {
@@ -19,6 +19,7 @@
 				}
 			}
 		</select><br/>
+		<b>Authors:</b></br>
 		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
 			@for(author <- AuthorController.getAuthors) {
 				@if(authorIds.contains(author.id)) {
@@ -28,6 +29,7 @@
 				}
 			}
 		</select>
+		<br/>
 		<input type="submit" value="Save changes" class="btn"/>
 		}
 	}
