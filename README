@@ -4,3 +4,5 @@ När någon lånar en bok så ska denna person, via appen, visa detta.
 På så sätt så kan alla se vilka böcker som finns inne, vem som har
 vilken bok, och när boken kommer vara tillbaka.
 
+Du vill ha mysql och play 2.0.3 installerat.
+
