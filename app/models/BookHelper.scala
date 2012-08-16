@@ -15,6 +15,20 @@ object BookHelper {
 		)
 	)
 	
+	/** Edit book formuläret **/
+	val editBookForm = Form(
+		tuple(
+			"id" -> number,
+			"title" -> nonEmptyText,
+			"language" -> nonEmptyText,
+			"pages" -> number(min = 0)
+		)
+	)
+	
+	val bookIdForm = Form(
+		"id" -> number
+	)
+	
 	/** Borrow book formuläret **/
 	val borrowBookForm = Form(
 		tuple(
