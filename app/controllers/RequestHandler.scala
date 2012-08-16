@@ -19,15 +19,15 @@ import models.Book
 object RequestHandler extends Controller{
 	
 	def handleAddBookRequest = Action { implicit request =>
-		
-		val authors = request.body.asFormUrlEncoded.get("author")
-		val categories = request.body.asFormUrlEncoded.get("category")
-
 		BookHelper.addBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.addBook(BookHelper.addBookForm, BookHelper.error_addBookForm)),
 			bookForm => {
 				val book = new Book(bookForm._1, bookForm._2, bookForm._3, bookForm._4)
 				val bookId = BookController.addBook(book)
+				
+				val authors = request.body.asFormUrlEncoded.get("author")
+				val categories = request.body.asFormUrlEncoded.get("category")
+				
 				for (author <- authors) {
 					AuthorController.addBookToAuthor(bookId, Integer.parseInt(author))
 				}
