@@ -26,13 +26,9 @@ object RequestHandler extends Controller{
 				val bookId = BookController.addBook(book)
 				
 				val authors = request.body.asFormUrlEncoded.get("author")
-				val categories = request.body.asFormUrlEncoded.get("category")
 				
 				for (author <- authors) {
 					AuthorController.addBookToAuthor(bookId, Integer.parseInt(author))
-				}
-				for (category <- categories) {
-					CategoryController.addCategoryToBook(bookId, Integer.parseInt(category))
 				}
 				Ok(views.html.addBook(BookHelper.addBookForm, BookHelper.getAddedMsg(bookForm._2)))
 			}
@@ -106,11 +102,7 @@ object RequestHandler extends Controller{
 				authors.foreach(author => tempAuthors+= author.id)
 				val authorIds = tempAuthors.toList
 				
-				val categories = CategoryController.getCategoryByBookId(id)
-				var tempCategories = ListBuffer[Int]()
-				categories.foreach(category => tempCategories+=category.id)
-				val categoryIds = tempCategories.toList
-				Ok(views.html.editBook(book, authors, categories, categoryIds, authorIds))
+				Ok(views.html.editBook(book, authors, authorIds))
 			}
 		)
 	}
