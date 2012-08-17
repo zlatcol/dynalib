@@ -8,9 +8,4 @@ object SearchHelper {
 	val authorSearchForm = Form(
 		"authorId" -> number
 	)
-	
-	val categorySearchForm = Form(
-		"categoryId" -> number
-	)
-
 }

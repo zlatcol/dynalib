@@ -96,17 +96,6 @@ object RequestHandler extends Controller{
 		)
 	}
 	
-	def handleSearchByCategory = Action { implicit request =>
-		SearchHelper.categorySearchForm.bindFromRequest.fold(
-			errors => BadRequest(views.html.index()),
-			categorySearchForm => {
-				val categoryId = categorySearchForm
-				val searchResults = SearchController.searchByCategory(categoryId)
-				Ok(views.html.results(searchResults))
-			}
-		)
-	}
-	
 	def handleEditBookRequest = Action {implicit request =>
 		BookHelper.bookIdForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.index()),
@@ -130,11 +119,9 @@ object RequestHandler extends Controller{
 		BookHelper.editBookForm.bindFromRequest.fold(
 			errors => BadRequest(views.html.index()),
 			form => {
-				val authors = request.body.asFormUrlEncoded.get("author").toList
-				val categories = request.body.asFormUrlEncoded.get("category").toList
-				
+				val authors = request.body.asFormUrlEncoded.get("author").toList				
 				val book = new Book(form._1, form._2, form._3, form._4)
-				BookController.editBook(book, authors, categories)
+				BookController.editBook(book, authors)
 				Redirect(routes.DynaLib.book(form._1))
 			}
 		)

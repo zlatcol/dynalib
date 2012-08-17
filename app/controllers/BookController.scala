@@ -77,16 +77,13 @@ object BookController extends Controller {
 		}
 	}
 	
-	def editBook(book: Book, authors: List[String], categories: List[String]) {
+	def editBook(book: Book, authors: List[String]) {
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET title = {title}, language = {language}, pages = {pages} WHERE id = {id}").on('id -> book.id, 'title -> book.title, 'language -> book.language, 'pages -> book.pages).executeUpdate()
 			SQL("DELETE FROM book_author WHERE bookId = {id}").on('id -> book.id).executeUpdate()
 			SQL("DELETE FROM book_category WHERE bookId = {id}").on('id -> book.id).executeUpdate()
 			for(author <- authors) {
 				SQL("INSERT INTO book_author (bookId,authorId) VALUES ({bookId},{authorId})").on('bookId -> book.id, 'authorId -> Integer.parseInt(author)).executeInsert()
-			}
-			for(category <- categories) {
-				SQL("INSERT INTO book_category (bookId,categoryId) VALUES ({bookId},{categoryId})").on('bookId -> book.id, 'categoryId -> Integer.parseInt(category)).executeInsert()
 			}
 		}
 	}

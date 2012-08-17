@@ -17,7 +17,6 @@ POST	/doAddAuthor				controllers.RequestHandler.handleAddAuthorRequest
 POST	/doBorrow					controllers.RequestHandler.handleBorrowBookRequest
 POST	/doReturn					controllers.RequestHandler.handleReturnBookRequest
 POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
-POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
 POST	/doEditBook					controllers.RequestHandler.handleEditBookRequest
 POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
 
