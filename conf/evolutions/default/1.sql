@@ -9,7 +9,7 @@ CREATE TABLE authors (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL DEFAULT '',
 CREATE TABLE book_author (bookId integer NOT NULL, authorId integer NOT NULL);
 CREATE INDEX book_author_idx ON book_author (bookId,authorId);
 CREATE INDEX author_book_idx ON book_author (authorId, bookId);
-CREATE INDEX author_book_idx ON book_category (categoryId, bookId);
+CREATE INDEX category_book_idx ON book_category (categoryId, bookId);
 CREATE TABLE category (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL DEFAULT '', PRIMARY KEY (id));
 CREATE TABLE users (id serial NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (id));
 
