@@ -2,7 +2,7 @@
 
 # --- !Ups
 
-CREATE TABLE users (id INT(5) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE users (id serial NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (id));
 
 # --- !Downs
 
