@@ -1,4 +1,4 @@
-@(book: Option[Book], authors: List[Author],categories: List[Category], users: List[User])
+@(book: Option[Book], authors: List[Author], users: List[User])
 
 @import helper._
 
@@ -13,11 +13,6 @@
 			@author.name <br />
 		}
 		<br />
-		<b>Category: </b> <br />
-		@for(category <- categories) {
-			@category.name <br />
-		}
-		<br/>
 		@form(routes.RequestHandler.handleEditBookRequest) {
 			<input type="hidden" value="@b.id" name="id">
 			<input type="submit" value="Edit book" class="btn"/>

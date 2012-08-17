@@ -9,12 +9,6 @@
 		@inputText(bookForm("title"))
 		@select(bookForm("language"), options = options(SelectOptions.languages))
 		@inputText(bookForm("pages"))
-		Category:<br/>
-		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
-			@for(category <- CategoryController.getCategories) {
-				<option value="@category.id">@category.name</option>
-			}
-		</select><br/>
 		Author(s):<br/>
 		<input id="authorSearch" type="text" data-provide="typeahead" autocomplete="off" />
 		<div id="picked"></div>

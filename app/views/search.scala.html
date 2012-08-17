@@ -11,13 +11,4 @@
 		</select>
 		<input type="submit" value="Search by author" class="btn">
 	}
-	
-	@form(routes.RequestHandler.handleSearchByCategory){
-		<select name="categoryId">
-			@for(category <- CategoryController.getCategories) {
-				<option value="@category.id">@category.name</option>
-			}
-		</select>
-		<input type="submit" value="Search by category" class="btn">
-	}
 }
