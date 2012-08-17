@@ -14,66 +14,83 @@ import models.BookHelper
 import models.AuthorHelper
 import play.api.cache.Cache
 import models.SearchHelper
+import play.api.libs.openid.OpenID
+import play.api.libs.concurrent.Redeemed
+import play.api.libs.concurrent.Thrown
+import traits.Secured
 
-object DynaLib extends Controller {
-	
-	def index() = Action {
-		//A comment. 
-		Ok(views.html.index())
+object DynaLib extends Controller with Secured {
+
+	def index() = withAuth {
+		email => Action {
+			Ok(views.html.index("Welcome to DynaLib: "+email))
+		}
 	}
 	
 	/** 
 	 *	Självförklarande funktion. Kommentar onödig.
 	 */
-	def listAllBooks = Action {
-		
-		val list: List[Book] = Cache.getOrElse[List[Book]]("allBooks", 600) {
-			BookController.getAllBooks
+	def listAllBooks = withAuth { 
+		email => Action {
+			val list: List[Book] = Cache.getOrElse[List[Book]]("allBooks", 600) {
+				BookController.getAllBooks
+			}
+			Ok(views.html.allBooks("All Books", list))
 		}
-		Ok(views.html.allBooks("All Books", list))
 	}
 	
-	def listAvailableBooks = Action {
-		
-		val list: List[Book] = Cache.getOrElse[List[Book]]("allAvailable", 600) {
-			BookController.getAllAvailableBooks
+	def listAvailableBooks = withAuth { 
+		email => Action {
+			val list: List[Book] = Cache.getOrElse[List[Book]]("allAvailable", 600) {
+				BookController.getAllAvailableBooks
+			}
+			Ok(views.html.allBooks("Available Books", list))
 		}
-		Ok(views.html.allBooks("Available Books", list))
 	}
 	
-	def listBorrowedBooks = Action {
-		val list: List[Book] = Cache.getOrElse[List[Book]]("allBorrowed", 600) {
-			BookController.getAllBorrowedBooks
+	def listBorrowedBooks = withAuth { 
+		email => Action {
+			val list: List[Book] = Cache.getOrElse[List[Book]]("allBorrowed", 600) {
+				BookController.getAllBorrowedBooks
+			}
+			Ok(views.html.allBooks("Borrowed Books", list))
 		}
-		Ok(views.html.allBooks("Borrowed Books", list))
 	}
 	
-	def search = Action {
-		Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
+	def search = withAuth { 
+		email => Action {
+			Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
+		}
 	}
 
 	/**
 	 * Visa addBook vyn
 	 */
-	def addBook = Action {
-		Ok(views.html.addBook(BookHelper.addBookForm))
+	def addBook = withAuth { 
+		email => Action {
+			Ok(views.html.addBook(BookHelper.addBookForm))
+		}
 	}
 	
 	/**
 	 * Visa addAuthor vyn
 	 */
-	def addAuthor = Action {
-		Ok(views.html.addAuthor(AuthorHelper.addAuthorForm))
+	def addAuthor = withAuth { 
+		email => Action {
+			Ok(views.html.addAuthor(AuthorHelper.addAuthorForm))
+		}
 	}
 
 	/** 
 	 * Hämta Bokinfo och skicka till book vyn
 	 */
-	def book(id: Int) = Action {
-		val book = BookController.getBookById(id)
-		val authors = AuthorController.getAuthorByBookId(id)
-		val categories = CategoryController.getCategoryByBookId(id)
-		val users = UserController.getUsers
-		Ok(views.html.book(book, authors, categories, users))
+	def book(id: Int) = withAuth { 
+		email => Action {
+			val book = BookController.getBookById(id)
+			val authors = AuthorController.getAuthorByBookId(id)
+			val categories = CategoryController.getCategoryByBookId(id)
+			val users = UserController.getUsers
+			Ok(views.html.book(book, authors, categories, users))
+		}
 	}
 }

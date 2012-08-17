@@ -12,6 +12,11 @@ GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 
+GET     /login 	                    controllers.Auth.login
+GET 	/authed						controllers.Auth.openIDCallback
+GET 	/logout						controllers.Auth.logout
+
+
 POST	/doAddBook					controllers.RequestHandler.handleAddBookRequest
 POST	/doAddAuthor				controllers.RequestHandler.handleAddAuthorRequest
 POST	/doBorrow					controllers.RequestHandler.handleBorrowBookRequest
@@ -20,6 +25,9 @@ POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
 POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
 POST	/doEditBook					controllers.RequestHandler.handleEditBookRequest
 POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
+POST 	/doLogin					controllers.Auth.loginPost
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
