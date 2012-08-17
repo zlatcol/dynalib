@@ -9,16 +9,6 @@
 		<b>Title</b>: <input type="text" name="title" value="@b.title"><br/>
 		<b>Pages</b>: <input type="text" name="pages" value="@b.pages"><br/>
 		<b>Language</b>: <input type="text" value="@b.language" name="language"><br/>
-		<b>Category</b>:<br/>
-		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
-			@for(category <- CategoryController.getCategories) {
-				@if(categoryIds.contains(category.id)) {
-					<option value="@category.id" selected="selected">@category.name</option>
-				} else {
-					<option value="@category.id">@category.name</option>
-				}
-			}
-		</select><br/>
 		<b>Authors:</b></br>
 		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
 			@for(author <- AuthorController.getAuthors) {
