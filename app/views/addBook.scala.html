@@ -12,7 +12,7 @@
 		Author(s):<br/>
 		<input id="authorSearch" type="text" data-provide="typeahead" autocomplete="off" />
 		<div id="picked"></div>
-		<select style="display:none" id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
+		<select style="display:none" id="author" name="author" multiple="multiple" size="10">
 			@for(author <- AuthorController.getAuthors) {
 				<option value="@author.id">@author.name</option>
 			}

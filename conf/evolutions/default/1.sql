@@ -10,7 +10,7 @@ CREATE TABLE book_author (bookId integer NOT NULL, authorId integer NOT NULL);
 CREATE INDEX book_author_idx ON book_author (bookId,authorId);
 CREATE INDEX author_book_idx ON book_author (authorId, bookId);
 CREATE INDEX author_book_idx ON book_category (categoryId, bookId);
-#CREATE TABLE category (id serial NOT NULL, name VARCHAR(255) NOT NULL DEFAULT '', PRIMARY KEY (id));
+CREATE TABLE category (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL DEFAULT '', PRIMARY KEY (id));
 CREATE TABLE users (id serial NOT NULL, name varchar(50) NOT NULL, PRIMARY KEY (id));
 
 # --- !Downs
@@ -20,7 +20,7 @@ DROP TABLE book_category;
 DROP TABLE authors;
 DROP INDEX IF EXISTS book_category_idx;
 DROP INDEX IF EXISTS category_book_idx;
-#DROP TABLE category;
+DROP TABLE category;
 DROP TABLE book_author;
 DROP INDEX IF EXISTS book_author_idx;
 DROP INDEX IF EXISTS author_book_idx;
