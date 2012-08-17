@@ -49,7 +49,7 @@ object DynaLib extends Controller {
 	}
 	
 	def search = Action {
-		Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
+		Ok(views.html.search(SearchHelper.authorSearchForm))
 	}
 
 	/**
