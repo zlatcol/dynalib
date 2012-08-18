@@ -73,7 +73,9 @@ object RequestHandler extends Controller with Secured {
 					val bookId = borrowBookForm._1
 					val userId = borrowBookForm._2
 					val days = borrowBookForm._3
-					BookController.borrowBook(bookId, userId, days)
+					if (user.id == userId) {
+						BookController.borrowBook(bookId, userId, days)
+					}
 					Redirect(routes.DynaLib.book(bookId))
 				}
 			)

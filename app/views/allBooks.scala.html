@@ -5,9 +5,9 @@
 @main(title) {
 	@for(book <- books) {
 		<a href="../library/@book.id"><b>@book.title</b></a>
-		@book.borrowedBy.map { _ => 
-			<span class="badge badge-info">Borrowed by @book.borrowedBy</span>
-		}.getOrElse {}
+		@book.borrowedBy.map { bUser => 
+			<span class="badge badge-info">Borrowed by @bUser.name</span>
+		}
 		<br />
 	}
 }

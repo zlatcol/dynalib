@@ -23,10 +23,10 @@
 			<input type="submit" value="Edit book" class="btn"/>
 		}
 		<br/>
-		@b.borrowedBy.map {_ => 
+		@b.borrowedBy.map { bUser => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
-				<b>Borrowed by @b.borrowedBy. Will be returned @b.borrowedAt</b>
+				<b>Borrowed by @bUser.name. Will be returned @b.borrowedAt</b>
 				<br/>
 				<br/>
 				<input type="submit" value="Return" class="btn"></input>

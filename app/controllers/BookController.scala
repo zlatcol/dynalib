@@ -38,10 +38,17 @@ object BookController extends Controller {
   		get[String]("title")~
   		get[String]("language")~
   		get[Int]("pages")~
-  		get[Option[String]]("borrowed_by")~
+  		get[Option[Int]]("borrowed_by")~
   		get[Option[Date]]("date_back") map {
-  			case id~title~language~pages~borrowed_by~date_back => new Book(id, title, language, pages, borrowed_by, date_back)
-  		}
+  			case id~title~language~pages~borrowed_by~date_back => {
+  				val user = borrowed_by.map { userId => 
+  					UserController.getUserById(userId)
+  				}.getOrElse {
+  					Option.empty
+  				}
+  				new Book(id, title, language, pages, user, date_back)  				  
+  			}
+		}
  
 	def getAllBooks: List[Book] = {
 		DB.withConnection { implicit c =>
@@ -63,10 +70,14 @@ object BookController extends Controller {
 	}
 	
 	def borrowBook(bookId: Int, userId: Int, days: Int) {
-		val user = UserController.getUserById(userId).getOrElse[User](new User(0, "Error", "Error"))
-		killListCache
-		DB.withConnection { implicit c =>
-			SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL "+days+" DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.name).executeUpdate()
+		UserController.getUserById(userId).map { user =>
+			val res = DB.withConnection { implicit c =>
+				SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL "+days+" DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.id).executeUpdate()
+			}
+			killListCache
+			res  
+		}.getOrElse {
+		  0
 		}
 	}
 	

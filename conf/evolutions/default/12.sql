@@ -11,3 +11,4 @@ INSERT INTO users (email, name) VALUES ('test.user@dynabyte.se','Test User');
 # --- !Downs
 
 ALTER TABLE users DROP COLUMN email;
+DELETE from users;
