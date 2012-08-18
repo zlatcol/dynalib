@@ -35,12 +35,9 @@
 			@form(routes.RequestHandler.handleBorrowBookRequest) {
 			<h2>Borrow book</h2>
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
-					Who:
-					<select id="userId" name="userId">
-						@for(user <- UserController.getUsers) {
-							<option value="@user.id">@user.name</option>
-						}
-					</select><br/>
+				<input type="hidden" id="userId" name="userId" value="@user.id" />
+					<i>@user.name</i>
+					<br/>
 					For how long: 
 					<select id="days" name="days">
 						@for(option <- SelectOptions.timePeriods) {
