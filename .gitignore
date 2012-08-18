@@ -1,15 +1,18 @@
+# Folders
 logs
 project/project
 project/target
 target
 tmp
-.history
 dist
 bin
+
+# Files
+.history
 .target
 .cache
 .classpath
-
 .project
-
 .settings/org.scala-ide.sdt.core.prefs
+.DS_Store
+RUNNING_PID
