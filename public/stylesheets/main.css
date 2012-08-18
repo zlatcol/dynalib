@@ -2,16 +2,17 @@
  * DynaLib
  */
 body {
-  padding-top: 60px;
-  padding-bottom: 40px;
+	padding-top: 60px;
+	padding-bottom: 40px;
+	text-shadow: 0 1px 1px #bbe;
 }
 
 .bg {
-  background: url(../img/bg.png) center top repeat;
+	background: url(../img/bg.png) center top repeat;
 }
 
 .bgDark {
-  background: url(../img/bg_dark.png) center top repeat;
+	background: url(../img/bg_dark.png) center top repeat;
 }
 
 .logo {
@@ -26,6 +27,9 @@ body {
 	margin-top: 150px;
 }
 
+h1, h2 {
+	text-shadow: 0 2px 2px #aad;
+}
 .fatText {
 	font: 31px/1.15 SuecaWebHdSemibold,georgia,serif;
 	font-size: 40px;
