@@ -50,4 +50,10 @@ object UserController {
 		Integer.parseInt(id.toString())
 	}
 
+	def changeName(id: Int, name: String): Int = {
+		DB.withConnection { implicit c =>
+			SQL("UPDATE users SET name = {name} WHERE id = {id}").on('name -> name, 'id -> id).executeUpdate()
+		}
+	}
+
 }

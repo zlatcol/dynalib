@@ -16,6 +16,7 @@ import play.api.cache.Cache
 import models.SearchHelper
 import models.Book
 import traits.Secured
+import models.User
 
 object RequestHandler extends Controller with Secured {
 	
@@ -159,4 +160,17 @@ object RequestHandler extends Controller with Secured {
 		}
 	}
 
+	def handleSaveUserRequest = withUser {
+		implicit user => Action { implicit request =>
+			User.editUserForm.bindFromRequest.fold(
+				errors => BadRequest(views.html.index()),
+				form => {
+					if (user.id == form._1) {
+						UserController.changeName(form._1, form._2)
+					}
+					Redirect(routes.DynaLib.user(form._1))
+				}
+			)
+		}
+	}
 }

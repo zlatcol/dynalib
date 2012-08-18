@@ -1,0 +1,23 @@
+@(shownUser: Option[User])(implicit user: User)
+
+@import helper._
+
+@shownUser.map { u =>
+	@main(u.name) {
+		@if(u.id == user.id) {
+			@form(routes.RequestHandler.handleSaveUserRequest) {
+				<input type="hidden" name="id" value="@u.id" />
+				<b>User:</b> <input type="text" name="name" value="@u.name" /><br />
+				<b>Email:</b> @u.email <br />
+				<input type="submit" value="Save changes" class="btn" />		
+			}
+		} else {
+			<b>User:</b> @u.name <br />
+			<b>Email:</b> @u.email <br />
+		}
+	}
+}.getOrElse { 
+	@main("No such user found") {
+	}
+}
+

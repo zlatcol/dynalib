@@ -36,14 +36,12 @@
 			<h2>Borrow book</h2>
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
 				<input type="hidden" id="userId" name="userId" value="@user.id" />
-					<i>@user.name</i>
-					<br/>
 					For how long: 
 					<select id="days" name="days">
 						@for(option <- SelectOptions.timePeriods) {
 						<option value="@option._1">@option._2</option>
 						}
-					</select>
+					</select> as <i>@user.name</i>
 					<br/>
 					<br/>
 				<input type="submit" value="Borrow" class="btn"></input>

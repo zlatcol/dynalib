@@ -9,6 +9,7 @@ GET		/available					controllers.DynaLib.listAvailableBooks
 GET		/borrowed					controllers.DynaLib.listBorrowedBooks
 GET		/search						controllers.DynaLib.search
 GET		/library/:id				controllers.DynaLib.book(id: Int)
+GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 
@@ -24,6 +25,7 @@ POST	/doReturn					controllers.RequestHandler.handleReturnBookRequest
 POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
 POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
 POST	/doEditBook					controllers.RequestHandler.handleEditBookRequest
+POST	/doEditUser					controllers.RequestHandler.handleSaveUserRequest
 POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
 POST 	/doLogin					controllers.Auth.loginPost
 
