@@ -38,7 +38,11 @@ object Auth extends Controller {
 										val user = new User(0, email, names.mkString(" "));
 										UserController.create(user)
 									}
-									Redirect(routes.DynaLib.index).withSession(Security.username -> email)
+									if (userId == 0) {
+										Logger.error("Could not log in user: "+email)
+										Redirect(routes.Auth.login)
+									}
+									Redirect(routes.DynaLib.index).withSession("userId" -> userId.toString())
 								}
 								case _ => {
 									Logger.error("Not a correct domain")
