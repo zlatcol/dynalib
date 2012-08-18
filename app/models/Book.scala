@@ -6,7 +6,7 @@ case class Book (
 	var title: String,
 	var language: String,
 	var pages: Int,
-	var borrowedBy: Option[String],
+	var borrowedBy: Option[User],
 	var borrowedAt: Option[Date]
 ) {
   	def this(id: Int, title: String, language: String, pages: Int) = {

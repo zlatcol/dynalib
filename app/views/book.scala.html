@@ -1,4 +1,4 @@
-@(book: Option[Book], authors: List[Author],categories: List[Category], users: List[User])
+@(book: Option[Book], authors: List[Author],categories: List[Category], users: List[User])(implicit user: User)
 
 @import helper._
 
@@ -23,10 +23,10 @@
 			<input type="submit" value="Edit book" class="btn"/>
 		}
 		<br/>
-		@b.borrowedBy.map {_ => 
+		@b.borrowedBy.map { bUser => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
-				<b>Borrowed by @b.borrowedBy. Will be returned @b.borrowedAt</b>
+				<b>Borrowed by @bUser.name. Will be returned @b.borrowedAt</b>
 				<br/>
 				<br/>
 				<input type="submit" value="Return" class="btn"></input>
@@ -35,18 +35,13 @@
 			@form(routes.RequestHandler.handleBorrowBookRequest) {
 			<h2>Borrow book</h2>
 				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
-					Who:
-					<select id="userId" name="userId">
-						@for(user <- UserController.getUsers) {
-							<option value="@user.id">@user.name</option>
-						}
-					</select><br/>
+				<input type="hidden" id="userId" name="userId" value="@user.id" />
 					For how long: 
 					<select id="days" name="days">
 						@for(option <- SelectOptions.timePeriods) {
 						<option value="@option._1">@option._2</option>
 						}
-					</select>
+					</select> as <i>@user.name</i>
 					<br/>
 					<br/>
 				<input type="submit" value="Borrow" class="btn"></input>
