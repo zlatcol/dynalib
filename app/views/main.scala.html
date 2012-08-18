@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit user: User)
 <!DOCTYPE html>
 
 <html>
@@ -20,7 +20,7 @@
           			
           			<div class="btn-group pull-right">
             			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-	              			<i class="icon-user"></i> Logged in!
+	              			<i class="icon-user"></i> @user.name
 	              			<span class="caret"></span>
             			</a>
             			<ul class="dropdown-menu">

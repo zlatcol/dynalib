@@ -21,17 +21,17 @@ import traits.Secured
 
 object DynaLib extends Controller with Secured {
 
-	def index() = withAuth {
-		email => Action {
-			Ok(views.html.index("Welcome to DynaLib: "+email))
+	def index() = withUser {
+		implicit user => Action {
+			Ok(views.html.index("Welcome to DynaLib: "+user.name))
 		}
 	}
 	
 	/** 
 	 *	Självförklarande funktion. Kommentar onödig.
 	 */
-	def listAllBooks = withAuth { 
-		email => Action {
+	def listAllBooks = withUser { 
+		implicit user => Action {
 			val list: List[Book] = Cache.getOrElse[List[Book]]("allBooks", 600) {
 				BookController.getAllBooks
 			}
@@ -39,8 +39,8 @@ object DynaLib extends Controller with Secured {
 		}
 	}
 	
-	def listAvailableBooks = withAuth { 
-		email => Action {
+	def listAvailableBooks = withUser { 
+		implicit user => Action {
 			val list: List[Book] = Cache.getOrElse[List[Book]]("allAvailable", 600) {
 				BookController.getAllAvailableBooks
 			}
@@ -48,8 +48,8 @@ object DynaLib extends Controller with Secured {
 		}
 	}
 	
-	def listBorrowedBooks = withAuth { 
-		email => Action {
+	def listBorrowedBooks = withUser { 
+		implicit user => Action {
 			val list: List[Book] = Cache.getOrElse[List[Book]]("allBorrowed", 600) {
 				BookController.getAllBorrowedBooks
 			}
@@ -57,8 +57,8 @@ object DynaLib extends Controller with Secured {
 		}
 	}
 	
-	def search = withAuth { 
-		email => Action {
+	def search = withUser { 
+		implicit user => Action {
 			Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
 		}
 	}
@@ -66,8 +66,8 @@ object DynaLib extends Controller with Secured {
 	/**
 	 * Visa addBook vyn
 	 */
-	def addBook = withAuth { 
-		email => Action {
+	def addBook = withUser { 
+		implicit user => Action {
 			Ok(views.html.addBook(BookHelper.addBookForm))
 		}
 	}
@@ -75,8 +75,8 @@ object DynaLib extends Controller with Secured {
 	/**
 	 * Visa addAuthor vyn
 	 */
-	def addAuthor = withAuth { 
-		email => Action {
+	def addAuthor = withUser { 
+		implicit user => Action {
 			Ok(views.html.addAuthor(AuthorHelper.addAuthorForm))
 		}
 	}
@@ -84,8 +84,8 @@ object DynaLib extends Controller with Secured {
 	/** 
 	 * Hämta Bokinfo och skicka till book vyn
 	 */
-	def book(id: Int) = withAuth { 
-		email => Action {
+	def book(id: Int) = withUser { 
+		implicit user => Action {
 			val book = BookController.getBookById(id)
 			val authors = AuthorController.getAuthorByBookId(id)
 			val categories = CategoryController.getCategoryByBookId(id)

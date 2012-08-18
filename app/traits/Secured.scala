@@ -1,6 +1,8 @@
 package traits
 import play.api.mvc._
 import controllers.routes
+import controllers.UserController
+import models.User
 
 trait Secured {
 	def username(request: RequestHeader) = request.session.get(Security.username)
@@ -11,5 +13,11 @@ trait Secured {
 		Security.Authenticated(username, onUnauthorized) { user =>
 			Action(request => f(user)(request))
 		}
+	}
+
+	def withUser(f: User => Request[AnyContent] => Result) = withAuth { email => implicit request =>
+		UserController.getUserByEmail(email).map { user =>
+			f(user)(request)
+		}.getOrElse(onUnauthorized(request))
 	}
 }
