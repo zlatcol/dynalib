@@ -7,6 +7,7 @@ import play.api.data.Forms._
 import play.api.libs.openid._
 import play.api.libs.concurrent._
 import scala.util.matching.Regex
+import models.User
 
 object Auth extends Controller {
 	
@@ -26,10 +27,17 @@ object Auth extends Controller {
 				case Redeemed(info) => {
 					info.attributes.get("email").map {
 						email => {
-							val r = new Regex("(.*)@dynabyte.se$")
+							val domain = "dynabyte.se"
+							val r = new Regex("(.*)@"+domain+"$")
 							email match {
-								case r(user) => {
-									println(user) // <- do some more fancy stuff
+								case r(name) => {
+									val userId = UserController.getUserByEmail(email).map { user =>
+										user.id
+									}.getOrElse {
+										val names = for (sub <- name.split("\\.")) yield sub.capitalize
+										val user = new User(0, email, names.mkString(" "));
+										UserController.create(user)
+									}
 									Redirect(routes.DynaLib.index).withSession(Security.username -> email)
 								}
 								case _ => {

@@ -2,7 +2,8 @@ package models
 
 case class User (
 	val id: Int,
-	val name: String
+	val email: String,
+	var name: String
 )
 
 object User {
