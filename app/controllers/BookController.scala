@@ -15,7 +15,20 @@ import java.util.Date
 import play.api.cache.Cache
 
 object BookController extends Controller {
-	
+
+	/**
+	 * The columns to query when selecting a book
+	 */
+	val bookColumns = """
+		books.id,
+		books.title,
+		books.language,
+		books.pages,
+		books.borrowed_by,
+		books.date_borrowed,
+		books.date_back
+	""";
+
 	/**
 	 * Skapa Book objekt, skicka till DBn.
 	 */
@@ -29,7 +42,7 @@ object BookController extends Controller {
 	
 	def getBookById(id: Int): Option[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE id = {id}").on('id -> id).as(bookParser.singleOpt)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE id = {id}").on('id -> id).as(bookParser.singleOpt)
 		}
 	}
 	
@@ -39,33 +52,34 @@ object BookController extends Controller {
   		get[String]("language")~
   		get[Int]("pages")~
   		get[Option[Int]]("borrowed_by")~
+  		get[Option[Date]]("date_borrowed")~
   		get[Option[Date]]("date_back") map {
-  			case id~title~language~pages~borrowed_by~date_back => {
+  			case id~title~language~pages~borrowed_by~date_borrowed~date_back => {
   				val user = borrowed_by.map { userId => 
   					UserController.getUserById(userId)
   				}.getOrElse {
   					Option.empty
   				}
-  				new Book(id, title, language, pages, user, date_back)  				  
+  				new Book(id, title, language, pages, user, date_borrowed, date_back)  				  
   			}
 		}
  
 	def getAllBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books").as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books").as(bookParser *)
 		}
 	}
 	
 	def getAllAvailableBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE date_back IS NULL").as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE date_back IS NULL").as(bookParser *)
 			
 		}
 	}
 	
 	def getAllBorrowedBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE date_back IS NOT NULL").as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE date_back IS NOT NULL").as(bookParser *)
 		}
 	}
 	
@@ -78,7 +92,7 @@ object BookController extends Controller {
 			killListCache
 			res  
 		}.getOrElse {
-		  0
+			0
 		}
 	}
 	
