@@ -1,12 +1,13 @@
 @(title: String, books: List[Book])(implicit user: User)
 
 @import helper._
+@import components._
 
 @main(title) {
 	@for(book <- books) {
 		<a href="../library/@book.id"><b>@book.title</b></a>
 		@book.borrowedBy.map { bUser => 
-			<a href="@routes.DynaLib.user(bUser.id)"><span class="badge badge-info">Borrowed by @bUser.name</span></a>
+			Borrowed by @userSpan(bUser)
 		}
 		<br />
 	}

@@ -1,6 +1,8 @@
 @(book: Option[Book])(implicit user: User)
 
 @import helper._
+@import components._
+
 
 @book.map { b =>
 	@main(b.title) {
@@ -26,7 +28,7 @@
 		@b.borrowedBy.map { bUser => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
-				<b>Borrowed by @bUser.name on @b.borrowedAt. Will be returned @b.backBy.</b>
+				<b>Borrowed by @userSpan(bUser) on @b.borrowedAt. Will be returned @b.backBy.</b>
 				<br/>
 				<br/>
 				<input type="submit" value="Return" class="btn"></input>
