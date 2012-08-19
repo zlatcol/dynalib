@@ -149,8 +149,9 @@ object RequestHandler extends Controller with Secured {
 			BookHelper.editBookForm.bindFromRequest.fold(
 				errors => BadRequest(views.html.index()),
 				form => {
-					val authors = request.body.asFormUrlEncoded.get("author").toList
-					val categories = request.body.asFormUrlEncoded.get("category").toList
+					val formParams = request.body.asFormUrlEncoded.getOrElse(Map())
+					val authors = formParams.getOrElse("author", List()).toList
+					val categories = formParams.getOrElse("category", List()).toList
 					
 					val book = new Book(form._1, form._2, form._3, form._4)
 					BookController.editBook(book, authors, categories)
