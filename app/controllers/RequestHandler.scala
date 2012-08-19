@@ -27,9 +27,10 @@ object RequestHandler extends Controller with Secured {
 				bookForm => {
 					val book = new Book(bookForm._1, bookForm._2, bookForm._3, bookForm._4)
 					val bookId = BookController.addBook(book)
-					
-					val authors = request.body.asFormUrlEncoded.get("author")
-					val categories = request.body.asFormUrlEncoded.get("category")
+
+					val formParams = request.body.asFormUrlEncoded.getOrElse(Map())
+					val authors = formParams.getOrElse("author", List())
+					val categories = formParams.getOrElse("category", List())
 					
 					for (author <- authors) {
 						AuthorController.addBookToAuthor(bookId, Integer.parseInt(author))
