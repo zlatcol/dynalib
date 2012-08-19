@@ -130,15 +130,9 @@ object RequestHandler extends Controller with Secured {
 				id => {
 					val book = BookController.getBookById(id)
 					val authors = AuthorController.getAuthorByBookId(id)
-					var tempAuthors = ListBuffer[Int]()
-					authors.foreach(author => tempAuthors+= author.id)
-					val authorIds = tempAuthors.toList
 					
 					val categories = CategoryController.getCategoryByBookId(id)
-					var tempCategories = ListBuffer[Int]()
-					categories.foreach(category => tempCategories+=category.id)
-					val categoryIds = tempCategories.toList
-					Ok(views.html.editBook(book, authors, categories, categoryIds, authorIds))
+					Ok(views.html.editBook(book, authors, categories))
 				}
 			)
 		}

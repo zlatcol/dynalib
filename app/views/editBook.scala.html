@@ -1,4 +1,4 @@
-@(book: Option[Book], authors: List[Author],categories: List[Category], categoryIds: List[Int], authorIds: List[Int])(implicit user: User)
+@(book: Option[Book], authors: List[Author],categories: List[Category])(implicit user: User)
 
 @import helper._
 
@@ -12,7 +12,7 @@
 		<b>Category</b>:<br/>
 		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
 			@for(category <- CategoryController.getCategories) {
-				@if(categoryIds.contains(category.id)) {
+				@if(b.categories.contains(category)) {
 					<option value="@category.id" selected="selected">@category.name</option>
 				} else {
 					<option value="@category.id">@category.name</option>
@@ -22,7 +22,7 @@
 		<b>Authors:</b></br>
 		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
 			@for(author <- AuthorController.getAuthors) {
-				@if(authorIds.contains(author.id)) {
+				@if(b.authors.contains(author)) {
 					<option value="@author.id" selected="selected">@author.name</option>
 				} else {
 					<option value="@author.id">@author.name</option>
