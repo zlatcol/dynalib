@@ -1,4 +1,4 @@
-@(book: Option[Book], authors: List[Author],categories: List[Category], users: List[User])(implicit user: User)
+@(book: Option[Book])(implicit user: User)
 
 @import helper._
 
@@ -9,12 +9,12 @@
 		<b>Language:</b> @b.language <br />
 		<b>Pages:</b> @b.pages <br />
 		<b>Authors: </b> <br />
-		@for(author <- authors) {
+		@for(author <- b.authors) {
 			@author.name <br />
 		}
 		<br />
 		<b>Category: </b> <br />
-		@for(category <- categories) {
+		@for(category <- b.categories) {
 			@category.name <br />
 		}
 		<br/>

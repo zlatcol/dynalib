@@ -10,10 +10,17 @@ import anorm._
 import anorm.SqlParser._
 
 object AuthorController {
-	
+	/**
+	 * The columns to query when selecting a author
+	 */
+	val authorColumns = """
+		authors.id,
+		authors.name
+	""";
+
 	val authorParser = 
-  		get[Int]("id")~
-  		get[String]("name") map {
+  		get[Int]("authors.id")~
+  		get[String]("authors.name") map {
   			case id~name => new Author(id, name)
   		}
 	
@@ -33,7 +40,8 @@ object AuthorController {
 	
 	def addBookToAuthor(bookId: Int, authorId: Int) {
 		DB.withConnection { implicit c =>
-			SQL("INSERT INTO book_author (bookId, authorId) VALUES ({bId}, {aId})").on('bId -> bookId, 'aId -> authorId).executeInsert()
+			SQL("INSERT INTO book_author (bookId, authorId) VALUES ({bId}, {aId})")
+				.on('bId -> bookId, 'aId -> authorId).executeInsert()
 		}
 	}
 	
@@ -46,13 +54,14 @@ object AuthorController {
 	
 	def getAuthors: List[Author] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, name FROM authors").as(authorParser *)
+			SQL("SELECT "+authorColumns+" FROM authors").as(authorParser *)
 		}
 	}
 	
 	def getByBookId(id: Int): List[Author] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT authors.id, authors.name FROM authors WHERE id IN (SELECT authorId FROM book_author WHERE bookId = {id})").on('id -> id).as(authorParser *)
+			SQL("SELECT "+authorColumns+" FROM authors WHERE id IN (SELECT authorId FROM book_author WHERE bookId = {id})")
+				.on('id -> id).as(authorParser *)
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package models
 import java.util.Date
+import controllers.AuthorController
+import controllers.CategoryController
 
 case class Book (
 	val id: Int,
@@ -13,5 +15,8 @@ case class Book (
 	def this(id: Int, title: String, language: String, pages: Int) = {
 		this(id, title, language, pages, Option.empty, Option.empty, Option.empty)
 	}
+	
+	lazy val authors = AuthorController.getByBookId(this.id)
 
+	lazy val categories = CategoryController.getByBookId(this.id)
 }
