@@ -104,7 +104,7 @@ object RequestHandler extends Controller with Secured {
 				authorSearchForm => {
 					val authorId = authorSearchForm
 					val searchResults = SearchController.searchByAuthor(authorId)
-					Ok(views.html.results(searchResults))
+					Ok(views.html.allBooks("Search Results:", searchResults))
 				}
 			)
 		}
@@ -117,7 +117,7 @@ object RequestHandler extends Controller with Secured {
 				categorySearchForm => {
 					val categoryId = categorySearchForm
 					val searchResults = SearchController.searchByCategory(categoryId)
-					Ok(views.html.results(searchResults))
+					Ok(views.html.allBooks("Search Results:", searchResults))
 				}
 			)
 		}
