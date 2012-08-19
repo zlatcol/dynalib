@@ -72,7 +72,8 @@ object BookController extends Controller {
 	def borrowBook(bookId: Int, userId: Int, days: Int) {
 		UserController.getUserById(userId).map { user =>
 			val res = DB.withConnection { implicit c =>
-				SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_back = date_add(DATE(NOW()), INTERVAL "+days+" DAY) WHERE id = {id}").on('id -> bookId, 'borrowed_by -> user.id).executeUpdate()
+				SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE id = {id}")
+					.on('id -> bookId, 'borrowed_by -> user.id).executeUpdate()
 			}
 			killListCache
 			res  
@@ -84,7 +85,7 @@ object BookController extends Controller {
 	def returnBook(bookId: Int) {
 		killListCache
 		DB.withConnection { implicit c =>
-			SQL("UPDATE books SET borrowed_by = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
+			SQL("UPDATE books SET borrowed_by = NULL, date_borrowed = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
 		}
 	}
 	
