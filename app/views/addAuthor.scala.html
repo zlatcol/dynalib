@@ -6,7 +6,7 @@
 	@msg
 	@form(routes.RequestHandler.handleAddAuthorRequest) {
 		<input type="hidden" id="id" name="id" value="0" >
-		@inputText(authorForm("name"))
+		@inputText(authorForm("name"), '_label -> "Name:", '_help -> "")
 		<input type="submit" value="Add" class="btn"></input>
 	}
 }

@@ -6,9 +6,9 @@
 	@msg
 	@form(routes.RequestHandler.handleAddBookRequest) {
 		<input type="hidden" id="id" name="id" value="0" >
-		@inputText(bookForm("title"))
-		@select(bookForm("language"), options = options(SelectOptions.languages))
-		@inputText(bookForm("pages"))
+		@inputText(bookForm("title"), '_label -> "Title:", '_help -> "")
+		@select(bookForm("language"), options = options(SelectOptions.languages), '_label -> "Language", '_help -> "")
+		@inputText(bookForm("pages"), '_label -> "Pages:", '_help -> "")
 		Category:<br/>
 		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
 			@for(category <- CategoryController.getCategories) {
