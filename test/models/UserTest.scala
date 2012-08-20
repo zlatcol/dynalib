@@ -7,7 +7,7 @@ import play.api.test.Helpers._
 
 class UserTest  extends Specification with Mockito {
 	"should be able to read/write fields from author" in {
-		val a = new User(1, "Name")
+		val a = new User(1, ",emal","Name")
 		a.id must equalTo(1)
 		a.name must equalTo("Name")	
 	}
