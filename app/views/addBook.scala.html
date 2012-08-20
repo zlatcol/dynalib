@@ -16,8 +16,6 @@
 			}
 		</select><br/>
 		Author(s):<br/>
-		<!--  <input id="authorSearch" type="text" data-provide="typeahead" autocomplete="off" />
-		<div id="picked"></div>-->
 		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
 			@for(author <- AuthorController.getAuthors) {
 				<option value="@author.id">@author.name</option>
@@ -25,63 +23,4 @@
 		</select><br/>
 		<input type="submit" value="Add" class="btn"></input>
 	}
-	<script>
-function markAuthorAsSelected(author, selected) {
-	var changed = false;
-	$('#author option').each(function() {
-		if ($(this).text() == author) {
-			if (selected && !this.selected) {
-				changed = true;
-			} else if (!selected && this.selected) {
-				changed = true;
-			}
-			this.selected = selected;
-		}
-	});
-	return changed;
-}
-
-$(function() {
-	var source = [
-@{
-	(for (author <- AuthorController.getAuthors) yield "'"+author.name+"'").mkString(",")
-}
-	];
-	$('#authorSearch').typeahead({
-		'source': source
-	});
-	$('#picked div a').live("click", function() {
-		$parent = $(this).parents('div.alert');
-		
-		var author = $parent.find('span').text();
-		if (markAuthorAsSelected(author, false)) {
-			$parent.fadeOut(500, function() {
-				$(this).remove();
-			});
-		}
-	}); 
-	$('#authorSearch').bind("keydown", function(l) {
-	    if (l.keyCode == 13) {
-	    	l.preventDefault();
-	    	$typeahead = $('.typeahead');
-	    	if ($typeahead.length == 0 || $typeahead.css('display') == 'none') {
-	    		var author = $(this).val();
-	    	        
-	    		if (-1 == $.inArray(author, source)) {
-// TODO: be able to add new ones in form
-	    		} else {
-	    			if (markAuthorAsSelected(author, true)) {
-						var $author = '<div class="span2 alert alert-info">'
-			    	          +'<span>'+author+'</span>'
-			    	          +'<a href="#" class="close">x</a>'
-			    	          +'</div>';
-						$('#picked').append($author);
-						$('#authorSearch').val('');
-	    			}
-	    		}
-	    	}
-	    }
-	});
-});
-	</script>
 }
