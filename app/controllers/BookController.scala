@@ -13,8 +13,9 @@ import play.api.data.Forms._
 import models.User
 import java.util.Date
 import play.api.cache.Cache
+import traits.Secured
 
-object BookController extends Controller {
+object BookController extends Controller with Secured {
 
 	/**
 	 * The columns to query when selecting a book
@@ -83,6 +84,12 @@ object BookController extends Controller {
 		}
 	}
 	
+	def getAllMyBooks(userId: Int): List[Book] = {
+		DB.withConnection { implicit c =>
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE borrowed_by = {id}").on('id -> userId).as(bookParser *)
+		}
+	}
+	
 	def borrowBook(bookId: Int, userId: Int, days: Int) {
 		UserController.getUserById(userId).map { user =>
 			val res = DB.withConnection { implicit c =>
@@ -117,9 +124,9 @@ object BookController extends Controller {
 		}
 	}
 	
-	def killListCache() {
-		Cache.set("allBorrowed", None)
-		Cache.set("allBooks", None)
-		Cache.set("allAvailable", None)
+	def killListCache {
+			Cache.set("allBorrowed", None)
+			Cache.set("allBooks", None)
+			Cache.set("allAvailable", None)
 	}
 }

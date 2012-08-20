@@ -7,6 +7,7 @@ GET     /    	                    controllers.DynaLib.index
 GET		/library					controllers.DynaLib.listAllBooks
 GET		/available					controllers.DynaLib.listAvailableBooks
 GET		/borrowed					controllers.DynaLib.listBorrowedBooks
+GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
 GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/user/:id					controllers.DynaLib.user(id: Int)

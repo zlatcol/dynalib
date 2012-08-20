@@ -57,6 +57,13 @@ object DynaLib extends Controller with Secured {
 		}
 	}
 	
+	def listMyBooks = withUser {
+		implicit user => Action {
+			val list: List[Book] = BookController.getAllMyBooks(user.id)
+			Ok(views.html.allBooks("My Books", list))
+		}
+	}
+	
 	def search = withUser { 
 		implicit user => Action {
 			Ok(views.html.search(SearchHelper.authorSearchForm, SearchHelper.categorySearchForm))
