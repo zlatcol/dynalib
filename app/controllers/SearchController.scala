@@ -10,7 +10,7 @@ object SearchController {
 	
 	def searchByAuthor(authorId: Int): List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT id, title, language, pages, borrowed_by, date_back FROM books WHERE id IN(SELECT book_author.bookId FROM book_author WHERE authorId = {aId})").on('aId -> authorId).as(BookController.bookParser *)
+			SQL("SELECT id, title, language, pages, borrowed_by, date_borrowed, date_back FROM books WHERE id IN(SELECT book_author.bookId FROM book_author WHERE authorId = {aId})").on('aId -> authorId).as(BookController.bookParser *)
 		}
 	}
 	
