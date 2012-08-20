@@ -1,7 +1,7 @@
 package models
 import play.api.data._
 import play.api.data.Forms._
-import controllers.CategoryController
+import controllers.AuthorController
 
 object BookHelper {
 	/** Add book formuläret **/
@@ -57,10 +57,10 @@ object BookHelper {
 	
 	def getSizeOfMultiChoice(): Int = {
 		var size = 0
-		if(CategoryController.getNumberOfCategories() > 10) {
+		if(AuthorController.getNumberOfAuthors() > 10) {
 			size = 10
 		} else {
-			size = CategoryController.getNumberOfCategories()
+			size = AuthorController.getNumberOfAuthors()
 		}
 		size
 	}
