@@ -130,10 +130,8 @@ object RequestHandler extends Controller with Secured {
 				errors => BadRequest(views.html.index()),
 				id => {
 					val book = BookController.getBookById(id)
-					val authors = AuthorController.getAuthorByBookId(id)
 					
-					val categories = CategoryController.getCategoryByBookId(id)
-					Ok(views.html.editBook(book, authors, categories))
+					Ok(views.html.editBook(book))
 				}
 			)
 		}
