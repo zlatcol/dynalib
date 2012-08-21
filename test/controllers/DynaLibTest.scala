@@ -7,15 +7,15 @@ import play.api.test.Helpers._
 
 class DynaLibTest extends Specification with Mockito{
 	
-	"index page should render correctly" in {
+	/*"index page should render correctly" in {
 		val result = controllers.DynaLib.index()(FakeRequest())
 			status(result) must equalTo(OK)
 			contentType(result) must beSome("text/html")
 			charset(result) must beSome("utf-8")
 			contentAsString(result) must contain("Welcome to DynaLib!")
-		}
+		}*/
 	
-	"add book page should render correctly" in {
+	/*"add book page should render correctly" in {
 		running(FakeApplication()) {
 		val result = controllers.DynaLib.addBook()(FakeRequest())
 			status(result) must equalTo(OK)
@@ -24,7 +24,7 @@ class DynaLibTest extends Specification with Mockito{
 			contentAsString(result) must contain("title")
 			contentAsString(result) must contain("pages")
 		}
-	}
+	}*/
 	
 	"library page should render some book that is in db" in {
 		running(FakeApplication()) {
@@ -35,7 +35,7 @@ class DynaLibTest extends Specification with Mockito{
 			}
 	}
 	
-	"add author page should render correctly" in {
+	/*"add author page should render correctly" in {
 		running(FakeApplication()) {
 		val result = controllers.DynaLib.addAuthor()(FakeRequest())
 			status(result) must equalTo(OK)
@@ -44,6 +44,6 @@ class DynaLibTest extends Specification with Mockito{
 			contentAsString(result) must contain("Add author")
 			contentAsString(result) must contain("name")
 		}
-	}
+	}*/
 	
 }

@@ -17,6 +17,7 @@ import models.SearchHelper
 import models.Book
 import traits.Secured
 import models.User
+import models.Review
 
 object RequestHandler extends Controller with Secured {
 	
@@ -81,6 +82,21 @@ object RequestHandler extends Controller with Secured {
 					Redirect(routes.DynaLib.book(bookId))
 				}
 			)
+		}
+	}
+	
+	def handleReviewBookRequest = withUser {
+		implicit user => Action {
+			implicit request => {
+				val bookId = Integer.parseInt(request.body.asFormUrlEncoded.get("bookId").head)
+				val userId = Integer.parseInt(request.body.asFormUrlEncoded.get("userId").head)
+				val score = Integer.parseInt(request.body.asFormUrlEncoded.get("RadioGroup").head)
+				val comment = request.body.asFormUrlEncoded.get("comment").head
+				
+				val review = new Review(0,bookId,userId,score,comment)
+				ReviewController.addReview(review)
+				Redirect(routes.DynaLib.listAllBooks)
+			}
 		}
 	}
 	

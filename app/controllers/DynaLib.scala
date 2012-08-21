@@ -98,6 +98,14 @@ object DynaLib extends Controller with Secured {
 			Ok(views.html.book(book))
 		}
 	}
+	
+	def reviewBook(id: Int) = withUser {
+		implicit user => Action {
+			val book = BookController.getBookById(id)
+			val users = UserController.getUsers
+			Ok(views.html.reviewBook(book))
+		}
+	}
 
 	def user(id: Int) = withUser { 
 		implicit user => Action {

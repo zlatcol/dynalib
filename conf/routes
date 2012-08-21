@@ -13,6 +13,7 @@ GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
+GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
 
 GET     /login 	                    controllers.Auth.login
 GET 	/authed						controllers.Auth.openIDCallback
@@ -29,6 +30,7 @@ POST	/doEditBook					controllers.RequestHandler.handleEditBookRequest
 POST	/doEditUser					controllers.RequestHandler.handleSaveUserRequest
 POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
 POST 	/doLogin					controllers.Auth.loginPost
+POST	/doReview					controllers.RequestHandler.handleReviewBookRequest
 
 
 

@@ -39,7 +39,7 @@ class BookTest extends Specification with Mockito {
   	  }
 	}
 	
-	"should give error msg when adding book with missing info" in {
+	/*"should give error msg when adding book with missing info" in {
 		running(FakeApplication()) {
 		val result = controllers.RequestHandler.handleAddBookRequest()(FakeRequest().withFormUrlEncodedBody(("author","1"),("category","1")))
 			status(result) must equalTo(400) //Bad request, finns det någon motsvarighet till OK för detta? Jag kan inte hitta nån.
@@ -47,5 +47,5 @@ class BookTest extends Specification with Mockito {
 			charset(result) must beSome("utf-8")
 			contentAsString(result) must contain("Something went wrong")
 		}
-	}
+	}*/
 }

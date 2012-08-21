@@ -35,6 +35,7 @@
 				@if(bUser.id == user.id) {
 					<input type="submit" value="Return" class="btn"></input>
 				}
+				
 			}
 		}.getOrElse {
 			@form(routes.RequestHandler.handleBorrowBookRequest) {
