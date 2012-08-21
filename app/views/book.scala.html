@@ -7,7 +7,7 @@
 @book.map { b =>
 	@main(b.title) {
 	
-		<b>Title:</b> @b.title <br />
+		<b>Title:</b> @b.title<br />
 		<b>Language:</b> @b.language <br />
 		<b>Pages:</b> @b.pages <br />
 		<b>Authors: </b> <br />
@@ -24,7 +24,8 @@
 			<input type="hidden" value="@b.id" name="id">
 			<input type="submit" value="Edit book" class="btn"/>
 		}
-		<br/>
+		<a href="/review/@b.id"><button class="btn">Add review</button></a>
+		<br/><br/>
 		@b.borrowedBy.map { bUser => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
 				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
