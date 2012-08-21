@@ -14,6 +14,7 @@ GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
+GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
 
 GET     /login 	                    controllers.Auth.login
 GET 	/authed						controllers.Auth.openIDCallback

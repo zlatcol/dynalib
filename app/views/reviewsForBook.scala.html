@@ -1,0 +1,11 @@
+@(reviews: List[Review])(implicit user: User)
+
+@import helper._
+@import components._
+
+@main("Reviews") {
+	@for(review <- reviews) {
+		@ReviewController.getNameOfReviewer(review.userId) @ReviewController.scoreMap(review.score) this book<br/>
+		<b>Comment:</b><br/>@review.comment<br/></br>
+	}
+}

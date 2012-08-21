@@ -24,7 +24,7 @@ object ReviewController {
 	
 	def getReviewsByBookId(bookId: Int): List[Review] = {
 		DB.withConnection { implicit c => 
-			SQL("SELECT id, bookId, userId, score, comment FROM reviews WHERE id = {id}").on('id -> bookId).as(reviewParser *)
+			SQL("SELECT id, bookId, userId, score, comment FROM reviews WHERE bookId = {bookId}").on('bookId -> bookId).as(reviewParser *)
 		}
 	}
 	
@@ -32,6 +32,22 @@ object ReviewController {
 		DB.withConnection { implicit c =>
 			SQL("INSERT INTO reviews (bookId, userId, score, comment) VALUES ({bId}, {uId}, {score}, {comment})").on('bId -> review.bookId, 'uId -> review.userId, 'score -> review.score, 'comment -> review.comment).executeInsert()	
 		}
+	}
+	
+	def scoreMap(score: Int): String = {
+		var grade = score match {
+			case -1 => "does not recommend"
+			case 0 => "has no strong opinions what so ever about"
+			case 1 => "recommends"
+		}
+		grade
+	}
+	
+	def getNameOfReviewer(userId: Int): String = {
+		val result = DB.withConnection { implicit c =>
+			SQL("SELECT name FROM users WHERE id = {userId}").on('userId -> userId).apply().head
+		}
+		result.asList.head.toString()
 	}
 
 }

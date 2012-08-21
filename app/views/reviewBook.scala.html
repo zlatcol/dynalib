@@ -7,10 +7,10 @@
 	@form(routes.RequestHandler.handleReviewBookRequest) {
 		<input type="hidden" name="bookId" id="bookId" value="@book.get.id">
 		<input type="hidden" name="userId" id="userId" value="@user.id">
-		<input id="r1" type="radio" value="1" name="RadioGroup">Good<br/>
+		<input id="r1" type="radio" value="1" name="RadioGroup">Recommend<br/>
 		<input id="r2" type="radio" value="0" name="RadioGroup">Neutral<br/>
-		<input id="r3" type="radio" value="-1" name="RadioGroup">Bad<br/><br/>
-		Add a comment:<br/>
+		<input id="r3" type="radio" value="-1" name="RadioGroup">Does not reccommend<br/><br/>
+		Add a comment (optional):<br/>
 		<textarea rows="5" cols="20" name="comment" id="comment">
 		</textarea><br/>
 		<input type="submit" value="Add review" class="btn">
