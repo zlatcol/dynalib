@@ -1,8 +1,7 @@
-@(book: Option[Book])(implicit user: User)
+@(book: Option[Book], copies: List[Copy])(implicit user: User)
 
 @import helper._
 @import components._
-
 
 @book.map { b =>
 	@main(b.title) {
@@ -24,7 +23,11 @@
 			<input type="hidden" value="@b.id" name="id">
 			<input type="submit" value="Edit book" class="btn"/>
 		}
-		<a href="/review/@b.id"><button class="btn">Add review</button></a>
+		<a href="/review/@b.id"><button class="btn">Add review</button></a><br/><br/>
+		@form(routes.RequestHandler.handleAddCopyRequest) {
+			<input type="hidden" name="bookId" id="bookId" value="@b.id">
+			<input type="submit" value="Add copy" class="btn">
+		}
 		<br/><br/>
 		@b.borrowedBy.map { bUser => 
 			@form(routes.RequestHandler.handleReturnBookRequest) {
@@ -39,21 +42,39 @@
 				
 			}
 		}.getOrElse {
-			@form(routes.RequestHandler.handleBorrowBookRequest) {
-			<h2>Borrow book</h2>
-				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
-				<input type="hidden" id="userId" name="userId" value="@user.id" />
+			@if(CopyController.getNumberOfAvailableCopiesForBook(b.id) > 0) {
+				@form(routes.RequestHandler.handleBorrowBookRequest) {
+					<h2>Borrow book</h2>
+					<input type="hidden" id="bookId" name="bookId" value="@b.id" />
+					<input type="hidden" id="userId" name="userId" value="@user.id" />
 					For how long: 
 					<select id="days" name="days">
 						@for(option <- SelectOptions.timePeriods) {
-						<option value="@option._1">@option._2</option>
+							<option value="@option._1">@option._2</option>
 						}
 					</select> as <i>@user.name</i>
 					<br/>
 					<br/>
-				<input type="submit" value="Borrow" class="btn"></input>
+					<input type="submit" value="Borrow" class="btn"></input>
+				}
+			} else {
+				<h2>All books are borrowed</h2>
 			}
 		}
+	@for(copy <- copies) {
+		@form(routes.RequestHandler.handleReturnBookRequest) {
+			<input type="hidden" id="id" name="id" value="@copy.id"/>
+			<input type="hidden" id="bookId" name="bookId" value="@copy.bookId"/>
+			<b>Borrowed by @userSpan(UserController.getUserById(copy.borrowedBy.get).get) on @copy.borrowedAt. Will be returned @copy.backBy.</b>
+			<br/>
+			<br/>
+			
+			@if(copy.borrowedBy.get == user.id) {
+				<input type="submit" value="Return" class="btn"></input>
+			}
+				
+		}
+	}
 	}
 }.getOrElse { 
 	@main("No book found") {

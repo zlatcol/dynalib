@@ -102,7 +102,8 @@ object DynaLib extends Controller with Secured {
 		implicit user => Action {
 			val book = BookController.getBookById(id)
 			val users = UserController.getUsers
-			Ok(views.html.book(book))
+			val copies = CopyController.getAllBorrowedCopiesForBook(id)
+			Ok(views.html.book(book, copies))
 		}
 	}
 	

@@ -24,10 +24,7 @@ object BookController extends Controller with Secured {
 		books.id,
 		books.title,
 		books.language,
-		books.pages,
-		books.borrowed_by,
-		books.date_borrowed,
-		books.date_back
+		books.pages
 	""";
 
 	/**
@@ -37,6 +34,7 @@ object BookController extends Controller with Secured {
 		var id = DB.withConnection { implicit c =>
 			SQL("INSERT INTO books (title, language, pages) VALUES ({title}, {language}, {pages})").on('title -> book.title, 'language -> book.language, 'pages -> book.pages).executeInsert()
 		}.getOrElse(0)
+		CopyController.addCopyForBook(Integer.parseInt(id.toString()))
 		killListCache
 		Integer.parseInt(id.toString())
 	}
@@ -51,17 +49,9 @@ object BookController extends Controller with Secured {
   		get[Int]("id")~
   		get[String]("title")~
   		get[String]("language")~
-  		get[Int]("pages")~
-  		get[Option[Int]]("borrowed_by")~
-  		get[Option[Date]]("date_borrowed")~
-  		get[Option[Date]]("date_back") map {
-  			case id~title~language~pages~borrowed_by~date_borrowed~date_back => {
-  				val user = borrowed_by.map { userId => 
-  					UserController.getUserById(userId)
-  				}.getOrElse {
-  					Option.empty
-  				}
-  				new Book(id, title, language, pages, user, date_borrowed, date_back)  				  
+  		get[Int]("pages") map {
+  			case id~title~language~pages => {
+  				new Book(id, title, language, pages)  				  
   			}
 		}
  
@@ -73,24 +63,24 @@ object BookController extends Controller with Secured {
 	
 	def getAllAvailableBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT "+this.bookColumns+" FROM books WHERE date_back IS NULL").as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE id IN (SELECT bookId FROM copies WHERE borrowed_by IS NULL GROUP BY bookId)").as(bookParser *)
 			
 		}
 	}
 	
 	def getAllBorrowedBooks: List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT "+this.bookColumns+" FROM books WHERE date_back IS NOT NULL").as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE id IN (SELECT bookId FROM copies WHERE borrowed_by IS NOT NULL GROUP BY bookId)").as(bookParser *)
 		}
 	}
 	
 	def getAllMyBooks(userId: Int): List[Book] = {
 		DB.withConnection { implicit c =>
-			SQL("SELECT "+this.bookColumns+" FROM books WHERE borrowed_by = {id}").on('id -> userId).as(bookParser *)
+			SQL("SELECT "+this.bookColumns+" FROM books WHERE id IN (SELECT bookId FROM copies WHERE borrowed_by = {id})").on('id -> userId).as(bookParser *)
 		}
 	}
 	
-	def borrowBook(bookId: Int, userId: Int, days: Int) {
+	/*def borrowBook(bookId: Int, userId: Int, days: Int) {
 		UserController.getUserById(userId).map { user =>
 			val res = DB.withConnection { implicit c =>
 				SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE id = {id}")
@@ -101,14 +91,14 @@ object BookController extends Controller with Secured {
 		}.getOrElse {
 			0
 		}
-	}
+	}*/
 	
-	def returnBook(bookId: Int) {
+	/*def returnBook(bookId: Int) {
 		killListCache
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET borrowed_by = NULL, date_borrowed = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
 		}
-	}
+	}*/
 	
 	def editBook(book: Book, authors: List[String], categories: List[String]) {
 		DB.withConnection { implicit c =>

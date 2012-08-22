@@ -18,6 +18,7 @@ import models.Book
 import traits.Secured
 import models.User
 import models.Review
+import models.CopyHelper
 
 object RequestHandler extends Controller with Secured {
 	
@@ -77,7 +78,7 @@ object RequestHandler extends Controller with Secured {
 					val userId = borrowBookForm._2
 					val days = borrowBookForm._3
 					if (user.id == userId) {
-						BookController.borrowBook(bookId, userId, days)
+						CopyController.borrowCopy(bookId, userId, days)
 					}
 					Redirect(routes.DynaLib.book(bookId))
 				}
@@ -103,11 +104,12 @@ object RequestHandler extends Controller with Secured {
 	/** Tar emot return book requesten. Gör anrop mot DBn som sätter att boken är tillbaka och dylikt **/
 	def handleReturnBookRequest = withUser {
 		implicit user => Action { implicit request =>
-			BookHelper.returnBookForm.bindFromRequest.fold(
+			CopyHelper.returnBookForm.bindFromRequest.fold(
 				errors => BadRequest(views.html.index()),
 				returnBookForm => {
-					val bookId = returnBookForm
-					BookController.returnBook(bookId)
+					val id = returnBookForm._1
+					val bookId = returnBookForm._2
+					CopyController.returnBook(id)
 					Redirect(routes.DynaLib.book(bookId))
 				}
 			)
@@ -183,4 +185,17 @@ object RequestHandler extends Controller with Secured {
 			)
 		}
 	}
+	
+	def handleAddCopyRequest = withUser {
+		implicit user => Action { implicit request =>
+			CopyHelper.addCopyForm.bindFromRequest.fold(
+				errors => BadRequest(views.html.index()),
+				form => {
+					CopyController.addCopyForBook(form)
+					Redirect(routes.DynaLib.book(form))
+				}
+			)
+		}
+	}
+	
 }
