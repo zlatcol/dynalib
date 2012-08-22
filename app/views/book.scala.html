@@ -1,85 +1,98 @@
-@(book: Option[Book], copies: List[Copy])(implicit user: User)
+@(book: Option[Book])(implicit user: User)
 
 @import helper._
 @import components._
 
 @book.map { b =>
 	@main(b.title) {
-	
-		<b>Title:</b> @b.title<br />
-		<b>Language:</b> @b.language <br />
-		<b>Pages:</b> @b.pages <br />
-		<b>Authors: </b> <br />
-		@for(author <- b.authors) {
-			@author.name <br />
+	<div class="span5">
+		<dl class="dl-horizontal">
+  			<dt>Title</dt>
+  			<dd>@b.title</dd>
+
+  			<dt>Language</dt>
+  			<dd>@b.language</dd>
+
+  			<dt>Pages</dt>
+  			<dd>@b.pages</dd>
+
+  			<dt>Authors</dt>
+  			<dd>@for(author <- b.authors) {
+				@author.name <br />
+			}</dd>
+			
+  			<dt>Categories</dt>
+  			<dd>@for(category <- b.categories) {
+				@category.name <br />
+			}</dd>
+		</dl>
+	</div>
+	<div class="span4">
+		@if(CopyController.getNumberOfAvailableCopiesForBook(b.id) > 0) {
+			<div class="hidden">
+			@form(routes.RequestHandler.handleBorrowBookRequest, 'id -> "borrowForm") {
+				<input type="hidden" id="bookId" name="bookId" value="@b.id" />
+				<input type="hidden" id="userId" name="userId" value="@user.id" />
+				<select id="days" name="days">
+					@for(option <- SelectOptions.timePeriods) {
+						<option value="@option._1">@option._2</option>
+					}
+				</select>
+			}
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">Borrow<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					@for(option <- SelectOptions.timePeriods) {
+						<li><a href="#" onclick="$('#borrowForm select option[value=@option._1]').attr('selected', true);$('#borrowForm').submit()">@option._2</a></li>
+					}
+				</ul>
+			</div>
+		} else {
+			<div class="btn-group">
+				<a class="btn dropdown-toggle disabled" data-toggle="dropdown" href="#">All borrowed</a>
+				</div>
 		}
 		<br />
-		<b>Category: </b> <br />
-		@for(category <- b.categories) {
-			@category.name <br />
-		}
-		<br/>
-		@form(routes.RequestHandler.handleDeleteBookRequest) {
-			<input type="hidden" name="id" id="id" value="@b.id">
-			<input type="submit" value="Delete book" class="btn">
-		}
-		@form(routes.RequestHandler.handleEditBookRequest) {
-			<input type="hidden" value="@b.id" name="id">
-			<input type="submit" value="Edit book" class="btn"/>
-		}
-		<a href="/review/@b.id"><button class="btn">Add review</button></a><br/><br/>
-		@form(routes.RequestHandler.handleAddCopyRequest) {
-			<input type="hidden" name="bookId" id="bookId" value="@b.id">
-			<input type="submit" value="Add copy" class="btn">
-		}
-		<br/><br/>
-		@b.borrowedBy.map { bUser => 
-			@form(routes.RequestHandler.handleReturnBookRequest) {
-				<input type="hidden" id="bookId" name="bookId" value="@b.id"/>
-				<b>Borrowed by @userSpan(bUser) on @b.borrowedAt. Will be returned @b.backBy.</b>
-				<br/>
-				<br/>
-				
-				@if(bUser.id == user.id) {
-					<input type="submit" value="Return" class="btn"></input>
-				}
-				
+		<div class="hidden">
+			@form(routes.RequestHandler.handleDeleteBookRequest, 'id -> "deleteForm") {
+				<input type="hidden" name="id" value="@b.id">
 			}
-		}.getOrElse {
-			@if(CopyController.getNumberOfAvailableCopiesForBook(b.id) > 0) {
-				@form(routes.RequestHandler.handleBorrowBookRequest) {
-					<h2>Borrow book</h2>
-					<input type="hidden" id="bookId" name="bookId" value="@b.id" />
-					<input type="hidden" id="userId" name="userId" value="@user.id" />
-					For how long: 
-					<select id="days" name="days">
-						@for(option <- SelectOptions.timePeriods) {
-							<option value="@option._1">@option._2</option>
-						}
-					</select> as <i>@user.name</i>
-					<br/>
-					<br/>
-					<input type="submit" value="Borrow" class="btn"></input>
-				}
-			} else {
-				<h2>All books are borrowed</h2>
+			@form(routes.RequestHandler.handleEditBookRequest, 'id -> "editForm") {
+				<input type="hidden" name="id" value="@b.id">
 			}
-		}
-	@for(copy <- copies) {
-		@form(routes.RequestHandler.handleReturnBookRequest) {
-			<input type="hidden" id="id" name="id" value="@copy.id"/>
-			<input type="hidden" id="bookId" name="bookId" value="@copy.bookId"/>
-			<b>Borrowed by @userSpan(UserController.getUserById(copy.borrowedBy.get).get) on @copy.borrowedAt. Will be returned @copy.backBy.</b>
-			<br/>
-			<br/>
-			
+			@form(routes.RequestHandler.handleAddCopyRequest, 'id -> "copyForm") {
+				<input type="hidden" name="bookId" value="@b.id">
+			}
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">More<span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#" onclick="$('#editForm').submit()">Edit book</a></li>
+				<li><a href="/review/@b.id">Add review</a></li>
+				<li class="divider"></li>
+				<li><a href="#" onclick="$('#copyForm').submit()">Add copy</a></li>
+				<li><a href="#" onclick="$('#deleteForm').submit()">Delete book</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="span9">
+		@for(copy <- b.borrowedCopies) {
+			<div class="span7">
+				<b>One copy borrowed by @userSpan(UserController.getUserById(copy.borrowedBy.get).get) on @copy.borrowedAt. Will be returned @copy.backBy.</b>			
+			</div>
+			<div class="span1">
 			@if(copy.borrowedBy.get == user.id) {
-				<input type="submit" value="Return" class="btn"></input>
+				@form(routes.RequestHandler.handleReturnBookRequest) {
+					<input type="hidden" id="id" name="id" value="@copy.id" />
+					<input type="hidden" id="bookId" name="bookId" value="@copy.bookId" />
+					<input type="submit" value="Return" class="btn btn-mini btn-info"></input>
+				}
 			}
-				
+			</div>
 		}
 	}
-	}
+	</div>
 }.getOrElse { 
 	@main("No book found") {
 	}

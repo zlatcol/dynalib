@@ -6,9 +6,6 @@
 @main(title) {
 	@for(book <- books) {
 		<a href="../library/@book.id"><b>@book.title</b></a>
-		@book.borrowedBy.map { bUser => 
-			Borrowed by @userSpan(bUser)
-		}
 		<a href="/review/@book.id">| Add review</a>
 		<a href="/reviews/@book.id">| Read reviews</a>
 		<br />
