@@ -21,7 +21,7 @@
 		<br/>
 		@form(routes.RequestHandler.handleDeleteBookRequest) {
 			<input type="hidden" name="id" id="id" value="@b.id">
-			<input type="submit" value="Delete book">
+			<input type="submit" value="Delete book" class="btn">
 		}
 		@form(routes.RequestHandler.handleEditBookRequest) {
 			<input type="hidden" value="@b.id" name="id">
