@@ -79,10 +79,10 @@
 	<div class="span9">
 		@for(copy <- b.borrowedCopies) {
 			<div class="span7">
-				<b>One copy borrowed by @userSpan(UserController.getUserById(copy.borrowedBy.get).get) on @copy.borrowedAt. Will be returned @copy.backBy.</b>			
+				<b>One copy borrowed by @userSpan(copy.borrowedBy.get) on @copy.borrowedAt. Will be returned @copy.backBy.</b>			
 			</div>
 			<div class="span1">
-			@if(copy.borrowedBy.get == user.id) {
+			@if(copy.borrowedBy.get.id == user.id) {
 				@form(routes.RequestHandler.handleReturnBookRequest) {
 					<input type="hidden" id="id" name="id" value="@copy.id" />
 					<input type="hidden" id="bookId" name="bookId" value="@copy.bookId" />

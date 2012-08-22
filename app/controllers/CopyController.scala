@@ -25,7 +25,10 @@ object CopyController {
   		get[Option[Date]]("date_borrowed")~
   		get[Option[Date]]("date_back") map {
   			case id~bookId~borrowedBy~dateBorrowed~dateBack => {
-  				new Copy(id, bookId, borrowedBy, dateBorrowed, dateBack)  				  
+  				val user = borrowedBy.map { userid =>
+  					UserController.getUserById(userid)
+  				}.getOrElse { Option.empty }
+  				new Copy(id, bookId, user, dateBorrowed, dateBack)  				  
   			}
 		}
 	
