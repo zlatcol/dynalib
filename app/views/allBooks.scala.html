@@ -5,9 +5,9 @@
 
 @main(title) {
 	@for(book <- books) {
-		<a href="../library/@book.id"><b>@book.title</b></a>
-		<a href="/review/@book.id">| Add review</a>
-		<a href="/reviews/@book.id">| Read reviews</a>
+		<a href="@routes.DynaLib.book(book.id)"><b>@book.title</b></a>
+		| <a href="@routes.DynaLib.listAllReviewsForBook(book.id)">Read reviews</a>
+		
 		<br />
 	}
 }
