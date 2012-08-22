@@ -6,6 +6,7 @@ target
 tmp
 dist
 bin
+.idea
 
 # Files
 .history
