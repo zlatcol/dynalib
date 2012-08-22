@@ -25,6 +25,10 @@ object BookHelper {
 		)
 	)
 	
+	val deleteBookForm = Form(
+		"id" -> number
+	)
+	
 	val bookIdForm = Form(
 		"id" -> number
 	)

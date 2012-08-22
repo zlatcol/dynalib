@@ -33,6 +33,7 @@ POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
 POST 	/doLogin					controllers.Auth.loginPost
 POST	/doReview					controllers.RequestHandler.handleReviewBookRequest
 POST	/doAddCopy					controllers.RequestHandler.handleAddCopyRequest
+POST 	/doDeleteBook				controllers.RequestHandler.handleDeleteBookRequest
 
 # API
 

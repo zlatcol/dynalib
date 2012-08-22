@@ -71,5 +71,11 @@ object CopyController {
 		}
 		Integer.parseInt(result[Long]("count").toString())
 	}
+	
+	def deleteCopy(bookId: Int) {
+		DB.withConnection { implicit c =>
+			SQL("DELETE FROM copies WHERE bookId = {bookId}").on('bookId -> bookId).execute()
+		}
+	}
 
 }

@@ -114,6 +114,12 @@ object BookController extends Controller with Secured {
 		}
 	}
 	
+	def deleteBook(bookId: Int) {
+		DB.withConnection { implicit c =>
+			SQL("DELETE FROM books WHERE id = {id}").on('id -> bookId).execute()
+		}
+	}
+	
 	def killListCache {
 			Cache.set("allBorrowed", None)
 			Cache.set("allBooks", None)

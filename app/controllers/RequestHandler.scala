@@ -198,4 +198,18 @@ object RequestHandler extends Controller with Secured {
 		}
 	}
 	
+	def handleDeleteBookRequest = withUser {
+		implicit user => Action { implicit request =>
+			BookHelper.deleteBookForm.bindFromRequest.fold(
+				errors => BadRequest(views.html.index()),
+				bookId => {
+					BookController.deleteBook(bookId)
+					CopyController.deleteCopy(bookId)
+					BookController.killListCache
+					Ok(views.html.index())
+				}
+			)
+		}
+	}
+	
 }
