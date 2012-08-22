@@ -8,6 +8,9 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
+      "postgresql" % "postgresql" % "8.4-702.jdbc4",
+      "org.mockito" % "mockito-all" % "1.9.5-rc1",
+      "org.scalatest" % "scalatest_2.9.0" % "1.8"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
