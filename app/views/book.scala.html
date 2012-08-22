@@ -41,7 +41,7 @@
 			}
 			</div>
 			<div class="btn-group">
-				<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">Borrow<span class="caret"></span></a>
+				<a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">Borrow <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					@for(option <- SelectOptions.timePeriods) {
 						<li><a href="#" onclick="$('#borrowForm select option[value=@option._1]').attr('selected', true);$('#borrowForm').submit()">@option._2</a></li>
@@ -66,14 +66,14 @@
 			}
 		</div>
 		<div class="btn-group">
-			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">More<span class="caret"></span></a>
+			<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">More <span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a href="#" onclick="$('#editForm').submit()">Edit book</a></li>
 				<li><a href="@routes.DynaLib.reviewBook(b.id)">Add review</a></li>
 				<li><a href="@routes.DynaLib.listAllReviewsForBook(b.id)">Read reviews</a></li>
 				<li class="divider"></li>
 				<li><a href="#" onclick="$('#copyForm').submit()">Add copy</a></li>
-				<li><a href="#" onclick="$('#deleteForm').submit()">Delete book</a></li>
+				<li><a href="#" onclick="$('#deleteForm').submit()"><i class="icon-ban-circle"></i> Delete book</a></li>
 			</ul>
 		</div>
 	</div>
