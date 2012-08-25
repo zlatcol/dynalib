@@ -9,10 +9,10 @@ GET		/borrowed					controllers.DynaLib.listBorrowedBooks
 GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
 GET		/user/:id					controllers.DynaLib.user(id: Int)
-GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
 GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
+GET		/book/new   				controllers.DynaLib.addBook
 GET		/book/:id	    			controllers.DynaLib.book(id: Int)
 GET 	/book/:id/edit				controllers.RequestHandler.handleEditBookRequest(id: Int)
 
