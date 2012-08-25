@@ -22,17 +22,17 @@ GET 	/logout						controllers.Auth.logout
 
 
 POST	/addBook					controllers.RequestHandler.handleAddBookRequest
-POST	/addAuthor				controllers.RequestHandler.handleAddAuthorRequest
-POST	/borrow					controllers.RequestHandler.handleBorrowBookRequest
-POST	/return					controllers.RequestHandler.handleReturnBookRequest
-POST	/searchByAuthor			controllers.RequestHandler.handleSearchByAuthor
+POST	/addAuthor				    controllers.RequestHandler.handleAddAuthorRequest
+POST	/borrow					    controllers.RequestHandler.handleBorrowBookRequest
+POST	/return					    controllers.RequestHandler.handleReturnBookRequest
+POST	/searchByAuthor			    controllers.RequestHandler.handleSearchByAuthor
 POST 	/searchByCategory			controllers.RequestHandler.handleSearchByCategory
 POST	/editUser					controllers.RequestHandler.handleSaveUserRequest
-POST	/perfomEdit				controllers.RequestHandler.handlePerfomEditRequest
-POST 	/login					controllers.Auth.loginPost
-POST	/review					controllers.RequestHandler.handleReviewBookRequest
+POST	/perfomEdit				    controllers.RequestHandler.handlePerfomEditRequest
+POST 	/login					    controllers.Auth.loginPost
+POST	/review					    controllers.RequestHandler.handleReviewBookRequest
 POST	/addCopy					controllers.RequestHandler.handleAddCopyRequest
-POST 	/deleteBook				controllers.RequestHandler.handleDeleteBookRequest
+POST 	/deleteBook				    controllers.RequestHandler.handleDeleteBookRequest
 
 # API
 
