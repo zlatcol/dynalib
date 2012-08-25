@@ -1,39 +1,34 @@
-@(book: Option[Book])(implicit user: User)
+@(b: Book)(implicit user: User)
 
 @import helper._
 
-@book.map { b =>
-	@main("Edit book") {
-		@form(routes.RequestHandler.handlePerfomEditRequest) {
-		<input type="hidden" name="id" value="@b.id"/>
-		<b>Title</b>: <input type="text" name="title" value="@b.title"><br/>
-		<b>Pages</b>: <input type="text" name="pages" value="@b.pages"><br/>
-		<b>Language</b>: @select(BookHelper.addBookForm("language"), options = options(SelectOptions.languages),'_label -> "", '_help -> "")
-		<b>Category</b>:<br/>
-		<select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
-			@for(category <- CategoryController.getCategories) {
-				@if(b.categories.contains(category)) {
-					<option value="@category.id" selected="selected">@category.name</option>
-				} else {
-					<option value="@category.id">@category.name</option>
-				}
-			}
-		</select><br/>
-		<b>Authors:</b></br>
-		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
-			@for(author <- AuthorController.getAuthors) {
-				@if(b.authors.contains(author)) {
-					<option value="@author.id" selected="selected">@author.name</option>
-				} else {
-					<option value="@author.id">@author.name</option>
-				}
-			}
-		</select>
-		<br/>
-		<input type="submit" value="Save changes" class="btn"/>
-		}
-	}
-}.getOrElse { 
-	@main("No book found") {
-	}
+@main("Edit book") {
+    @form(routes.RequestHandler.handlePerfomEditRequest) {
+    <input type="hidden" name="id" value="@b.id"/>
+    <b>Title</b>: <input type="text" name="title" value="@b.title"><br/>
+    <b>Pages</b>: <input type="text" name="pages" value="@b.pages"><br/>
+    <b>Language</b>: @select(BookHelper.addBookForm("language"), options = options(SelectOptions.languages),'_label -> "", '_help -> "")
+    <b>Category</b>:<br/>
+    <select id="category" name="category" multiple="multiple" size="@CategoryController.getNumberOfCategories">
+        @for(category <- CategoryController.getCategories) {
+            @if(b.categories.contains(category)) {
+                <option value="@category.id" selected="selected">@category.name</option>
+            } else {
+                <option value="@category.id">@category.name</option>
+            }
+        }
+    </select><br/>
+    <b>Authors:</b></br>
+    <select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
+        @for(author <- AuthorController.getAuthors) {
+            @if(b.authors.contains(author)) {
+                <option value="@author.id" selected="selected">@author.name</option>
+            } else {
+                <option value="@author.id">@author.name</option>
+            }
+        }
+    </select>
+    <br/>
+    <input type="submit" value="Save changes" class="btn"/>
+    }
 }

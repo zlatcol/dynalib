@@ -142,19 +142,14 @@ object RequestHandler extends Controller with Secured {
 		}
 	}
 	
-	def handleEditBookRequest = withUser {
-		implicit user => Action { implicit request =>
-			BookHelper.bookIdForm.bindFromRequest.fold(
-				errors => BadRequest(views.html.index()),
-				id => {
-					val book = BookController.getBookById(id)
-					
-					Ok(views.html.editBook(book))
-				}
-			)
+	def handleEditBookRequest(id: Int) = withUser {
+		implicit user => Action {
+      BookController.getBookById(id).map { book =>
+        Ok(views.html.editBook(book))
+      }.getOrElse(BadRequest(views.html.index()))
 		}
 	}
-	
+
 	def handlePerfomEditRequest = withUser {
 		implicit user => Action { implicit request =>
 			BookHelper.editBookForm.bindFromRequest.fold(
