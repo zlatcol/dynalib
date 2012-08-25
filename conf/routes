@@ -2,19 +2,19 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Startsidan
 GET     /    	                    controllers.DynaLib.index
 GET		/library					controllers.DynaLib.listAllBooks
 GET		/available					controllers.DynaLib.listAvailableBooks
 GET		/borrowed					controllers.DynaLib.listBorrowedBooks
 GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
-GET		/library/:id				controllers.DynaLib.book(id: Int)
 GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/addBookForm				controllers.DynaLib.addBook
 GET		/addAuthorForm				controllers.DynaLib.addAuthor
 GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
 GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
+GET		/book/:id	    			controllers.DynaLib.book(id: Int)
+GET 	/book/:id/edit				controllers.RequestHandler.handleEditBookRequest(id: Int)
 
 GET     /login 	                    controllers.Auth.login
 GET 	/authed						controllers.Auth.openIDCallback
@@ -27,7 +27,6 @@ POST	/doBorrow					controllers.RequestHandler.handleBorrowBookRequest
 POST	/doReturn					controllers.RequestHandler.handleReturnBookRequest
 POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
 POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
-GET 	/book/:id/edit				controllers.RequestHandler.handleEditBookRequest(id: Int)
 POST	/doEditUser					controllers.RequestHandler.handleSaveUserRequest
 POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
 POST 	/doLogin					controllers.Auth.loginPost
