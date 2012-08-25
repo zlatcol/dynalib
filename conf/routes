@@ -10,11 +10,11 @@ GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
 GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/author/new 				controllers.DynaLib.addAuthor
-GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
-GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
 GET		/book/new   				controllers.DynaLib.addBook
 GET		/book/:id	    			controllers.DynaLib.book(id: Int)
 GET 	/book/:id/edit				controllers.RequestHandler.handleEditBookRequest(id: Int)
+GET		/book/:id/review			controllers.DynaLib.reviewBook(id: Int)
+GET		/book/:id/reviews/			controllers.DynaLib.listAllReviewsForBook(id: Int)
 
 GET     /login 	                    controllers.Auth.login
 GET 	/authed						controllers.Auth.openIDCallback
