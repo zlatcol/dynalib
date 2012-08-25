@@ -47,7 +47,7 @@ object CopyController {
 			val res = DB.withConnection { implicit c =>
 				SQL("UPDATE copies SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE bookId = {bookId} AND id = {copyId}").on('bookId -> bookId, 'borrowed_by -> user.id, 'copyId -> Integer.parseInt(freeCopy[Long]("copyId").toString())).executeUpdate()
 			}
-			BookController.killListCache
+			BookController.killListCache()
 			res  
 		}.getOrElse {
 			0
@@ -65,7 +65,7 @@ object CopyController {
 		DB.withConnection { implicit c =>
 			SQL("UPDATE copies SET borrowed_by = NULL, date_borrowed = NULL, date_back = NULL WHERE id = {id}").on('id -> copyId).executeUpdate()
 		}
-		BookController.killListCache
+		BookController.killListCache()
 	}
 	
 	def getNumberOfAvailableCopiesForBook(bookId: Int): Int = {

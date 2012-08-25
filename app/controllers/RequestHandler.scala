@@ -192,7 +192,7 @@ object RequestHandler extends Controller with Secured {
 				errors => BadRequest(views.html.index()),
 				form => {
 					CopyController.addCopyForBook(form)
-					BookController.killListCache
+					BookController.killListCache()
 					Redirect(routes.DynaLib.book(form))
 				}
 			)
@@ -206,7 +206,7 @@ object RequestHandler extends Controller with Secured {
 				bookId => {
 					BookController.deleteBook(bookId)
 					CopyController.deleteCopy(bookId)
-					BookController.killListCache
+					BookController.killListCache()
 					Ok(views.html.index())
 				}
 			)

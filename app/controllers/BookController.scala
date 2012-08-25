@@ -35,7 +35,7 @@ object BookController extends Controller with Secured {
 			SQL("INSERT INTO books (title, language, pages) VALUES ({title}, {language}, {pages})").on('title -> book.title, 'language -> book.language, 'pages -> book.pages).executeInsert()
 		}.getOrElse(0)
 		CopyController.addCopyForBook(Integer.parseInt(id.toString()))
-		killListCache
+		killListCache()
 		Integer.parseInt(id.toString())
 	}
 	
@@ -100,7 +100,7 @@ object BookController extends Controller with Secured {
 		}
 	}
 	
-	def killListCache {
+	def killListCache() {
 			Cache.set("allBorrowed", None)
 			Cache.set("allBooks", None)
 			Cache.set("allAvailable", None)
