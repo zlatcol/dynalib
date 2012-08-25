@@ -9,7 +9,7 @@ GET		/borrowed					controllers.DynaLib.listBorrowedBooks
 GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
 GET		/user/:id					controllers.DynaLib.user(id: Int)
-GET		/addAuthorForm				controllers.DynaLib.addAuthor
+GET		/author/new 				controllers.DynaLib.addAuthor
 GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
 GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
 GET		/book/new   				controllers.DynaLib.addBook
@@ -21,18 +21,18 @@ GET 	/authed						controllers.Auth.openIDCallback
 GET 	/logout						controllers.Auth.logout
 
 
-POST	/doAddBook					controllers.RequestHandler.handleAddBookRequest
-POST	/doAddAuthor				controllers.RequestHandler.handleAddAuthorRequest
-POST	/doBorrow					controllers.RequestHandler.handleBorrowBookRequest
-POST	/doReturn					controllers.RequestHandler.handleReturnBookRequest
-POST	/doSearchByAuthor			controllers.RequestHandler.handleSearchByAuthor
-POST 	/dosearchByCategory			controllers.RequestHandler.handleSearchByCategory
-POST	/doEditUser					controllers.RequestHandler.handleSaveUserRequest
-POST	/doPerfomEdit				controllers.RequestHandler.handlePerfomEditRequest
-POST 	/doLogin					controllers.Auth.loginPost
-POST	/doReview					controllers.RequestHandler.handleReviewBookRequest
-POST	/doAddCopy					controllers.RequestHandler.handleAddCopyRequest
-POST 	/doDeleteBook				controllers.RequestHandler.handleDeleteBookRequest
+POST	/addBook					controllers.RequestHandler.handleAddBookRequest
+POST	/addAuthor				controllers.RequestHandler.handleAddAuthorRequest
+POST	/borrow					controllers.RequestHandler.handleBorrowBookRequest
+POST	/return					controllers.RequestHandler.handleReturnBookRequest
+POST	/searchByAuthor			controllers.RequestHandler.handleSearchByAuthor
+POST 	/searchByCategory			controllers.RequestHandler.handleSearchByCategory
+POST	/editUser					controllers.RequestHandler.handleSaveUserRequest
+POST	/perfomEdit				controllers.RequestHandler.handlePerfomEditRequest
+POST 	/login					controllers.Auth.loginPost
+POST	/review					controllers.RequestHandler.handleReviewBookRequest
+POST	/addCopy					controllers.RequestHandler.handleAddCopyRequest
+POST 	/deleteBook				controllers.RequestHandler.handleDeleteBookRequest
 
 # API
 
