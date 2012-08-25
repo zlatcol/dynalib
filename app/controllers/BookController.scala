@@ -80,26 +80,6 @@ object BookController extends Controller with Secured {
 		}
 	}
 	
-	/*def borrowBook(bookId: Int, userId: Int, days: Int) {
-		UserController.getUserById(userId).map { user =>
-			val res = DB.withConnection { implicit c =>
-				SQL("UPDATE books SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE id = {id}")
-					.on('id -> bookId, 'borrowed_by -> user.id).executeUpdate()
-			}
-			killListCache
-			res  
-		}.getOrElse {
-			0
-		}
-	}*/
-	
-	/*def returnBook(bookId: Int) {
-		killListCache
-		DB.withConnection { implicit c =>
-			SQL("UPDATE books SET borrowed_by = NULL, date_borrowed = NULL, date_back = NULL WHERE id = {id}").on('id -> bookId).executeUpdate()
-		}
-	}*/
-	
 	def editBook(book: Book, authors: List[String], categories: List[String]) {
 		DB.withConnection { implicit c =>
 			SQL("UPDATE books SET title = {title}, language = {language}, pages = {pages} WHERE id = {id}").on('id -> book.id, 'title -> book.title, 'language -> book.language, 'pages -> book.pages).executeUpdate()
