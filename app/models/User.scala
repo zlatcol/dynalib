@@ -4,8 +4,8 @@ import play.api.data.Forms._
 import play.api.data.Form
 
 case class User (
-	val id: Int,
-	val email: String,
+	id: Int,
+	email: String,
 	var name: String
 )
 
