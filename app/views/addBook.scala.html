@@ -15,12 +15,18 @@
 				<option value="@category.id">@category.name</option>
 			}
 		</select><br/>
+        Add new author to list: <input id="addAuthor" type="text" /><br />
 		Author(s):<br/>
 		<select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
 			@for(author <- AuthorController.getAuthors) {
 				<option value="@author.id">@author.name</option>
 			}
 		</select><br/>
-		<input type="submit" value="Add" class="btn"></input>
+		<input type="submit" value="Add" class="btn" />
 	}
+    <script>
+        $(function() {
+            OptionAdder.bind($('#addAuthor'), $('#author'), "/api/addAuthor");
+        });
+    </script>
 }
