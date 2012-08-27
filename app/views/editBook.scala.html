@@ -18,6 +18,7 @@
             }
         }
     </select><br/>
+    Add new author to list: <input id="addAuthor" type="text" /><br />
     <b>Authors:</b></br>
     <select id="author" name="author" multiple="multiple" size="@BookHelper.getSizeOfMultiChoice">
         @for(author <- AuthorController.getAuthors) {
@@ -31,4 +32,9 @@
     <br/>
     <input type="submit" value="Save changes" class="btn"/>
     }
+    <script>
+    $(function() {
+        OptionAdder.bind($('#addAuthor'), $('#author'), "/api/addAuthor");
+    });
+    </script>
 }

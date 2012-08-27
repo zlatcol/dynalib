@@ -41,11 +41,13 @@ object CopyController {
 	//Se till att man lånar en kopia av en book. Spara en koppling till vilken bok i copiesdbn.
 	def borrowCopy(bookId: Int, userId: Int, days: Int) {
 		UserController.getUserById(userId).map { user =>
-			val freeCopy = DB.withConnection {implicit c => SQL("SELECT id AS copyID FROM copies WHERE bookId = {bookId} AND borrowed_by IS NULL LIMIT 1").on('bookId -> bookId).apply().head
+			val freeCopy = DB.withConnection {implicit c => SQL("SELECT id AS copyID FROM copies WHERE bookId = {bookId} AND borrowed_by IS NULL LIMIT 1")
+        .on('bookId -> bookId).apply().head
 			}
 			
 			val res = DB.withConnection { implicit c =>
-				SQL("UPDATE copies SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE bookId = {bookId} AND id = {copyId}").on('bookId -> bookId, 'borrowed_by -> user.id, 'copyId -> Integer.parseInt(freeCopy[Long]("copyId").toString())).executeUpdate()
+				SQL("UPDATE copies SET borrowed_by = {borrowed_by}, date_borrowed = now(), date_back = DATE(NOW()) + INTERVAL '"+days+" days' WHERE bookId = {bookId} AND id = {copyId}")
+          .on('bookId -> bookId, 'borrowed_by -> user.id, 'copyId -> Integer.parseInt(freeCopy[Long]("copyId").toString())).executeUpdate()
 			}
 			BookController.killListCache()
 			res  

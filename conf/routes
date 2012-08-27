@@ -10,31 +10,31 @@ GET		/myBooks					controllers.DynaLib.listMyBooks
 GET		/search						controllers.DynaLib.search
 GET		/user/:id					controllers.DynaLib.user(id: Int)
 GET		/author/new 				controllers.DynaLib.addAuthor
+GET		/review/:id					controllers.DynaLib.reviewBook(id: Int)
+GET		/reviews/:id				controllers.DynaLib.listAllReviewsForBook(id: Int)
 GET		/book/new   				controllers.DynaLib.addBook
 GET		/book/:id	    			controllers.DynaLib.book(id: Int)
 GET 	/book/:id/edit				controllers.RequestHandler.handleEditBookRequest(id: Int)
-GET		/book/:id/review			controllers.DynaLib.reviewBook(id: Int)
-GET		/book/:id/reviews/			controllers.DynaLib.listAllReviewsForBook(id: Int)
 
 GET     /login 	                    controllers.Auth.login
 GET 	/authed						controllers.Auth.openIDCallback
 GET 	/logout						controllers.Auth.logout
 
-
-POST	/addBook					controllers.RequestHandler.handleAddBookRequest
-POST	/addAuthor				    controllers.RequestHandler.handleAddAuthorRequest
-POST	/borrow					    controllers.RequestHandler.handleBorrowBookRequest
-POST	/return					    controllers.RequestHandler.handleReturnBookRequest
-POST	/searchByAuthor			    controllers.RequestHandler.handleSearchByAuthor
+POST	/book/new					controllers.RequestHandler.handleAddBookRequest
+POST	/addAuthor				controllers.RequestHandler.handleAddAuthorRequest
+POST	/borrow					controllers.RequestHandler.handleBorrowBookRequest
+POST	/return					controllers.RequestHandler.handleReturnBookRequest
+POST	/searchByAuthor			controllers.RequestHandler.handleSearchByAuthor
 POST 	/searchByCategory			controllers.RequestHandler.handleSearchByCategory
 POST	/editUser					controllers.RequestHandler.handleSaveUserRequest
-POST	/perfomEdit				    controllers.RequestHandler.handlePerfomEditRequest
-POST 	/login					    controllers.Auth.loginPost
-POST	/review					    controllers.RequestHandler.handleReviewBookRequest
+POST	/perfomEdit				controllers.RequestHandler.handlePerfomEditRequest
+POST 	/login					controllers.Auth.loginPost
+POST	/review					controllers.RequestHandler.handleReviewBookRequest
 POST	/addCopy					controllers.RequestHandler.handleAddCopyRequest
-POST 	/deleteBook				    controllers.RequestHandler.handleDeleteBookRequest
+POST 	/deleteBook				controllers.RequestHandler.handleDeleteBookRequest
 
 # API
+POST	/api/addAuthor				controllers.ApiController.addAuthor
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
