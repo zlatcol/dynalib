@@ -1,4 +1,4 @@
-package controllers2
+package controllers
 
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
@@ -26,14 +26,14 @@ class DynaLibTest extends Specification with Mockito{
 		}
 	}*/
 	
-	"library page should render some book that is in db" in {
+	/*"library page should render some book that is in db" in {
 		running(FakeApplication()) {
 			val Some(result) = routeAndCall(FakeRequest(GET, "/library"))
 			contentType(result) must beSome("text/html")
 			charset(result) must beSome("utf-8")
 			contentAsString(result) must contain("Flickan som lekte med en sten")
 			}
-	}
+	}*/
 	
 	/*"add author page should render correctly" in {
 		running(FakeApplication()) {
