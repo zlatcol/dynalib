@@ -144,7 +144,7 @@ object RequestHandler extends Controller with Secured {
 	
 	def handleEditBookRequest(id: Int) = withUser {
 		implicit user => Action {
-      BookController.getBookById(id).map { book =>
+      Book.findById(id).map { book =>
         Ok(views.html.editBook(book))
       }.getOrElse(BadRequest(views.html.index()))
 		}

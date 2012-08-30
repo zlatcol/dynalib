@@ -40,12 +40,6 @@ object BookController extends Controller with Secured {
 		Integer.parseInt(id.toString())
 	}
 	
-	def getBookById(id: Int): Option[Book] = {
-		DB.withConnection { implicit c =>
-			SQL("SELECT "+this.bookColumns+" FROM books WHERE id = {id}").on('id -> id).as(bookParser.singleOpt)
-		}
-	}
-	
 	val bookParser = 
   		get[Int]("id")~
   		get[String]("title")~
