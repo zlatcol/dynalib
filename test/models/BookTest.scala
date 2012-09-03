@@ -2,12 +2,10 @@ package models
 
 import org.specs2.mutable._
 import org.specs2.mock.Mockito
-import org.mockito.Mockito.verify
-import models.Book
 import controllers.BookController
 import play.api.test._
 import play.api.test.Helpers._
-import models.Author
+
 
 
 class BookTest extends Specification {
