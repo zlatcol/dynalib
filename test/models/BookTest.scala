@@ -20,7 +20,7 @@ class BookTest extends Specification {
 	
 	"should not find book" in {
 	  running(FakeApplication()) {
-		val book = BookController.getBookById(-1).getOrElse("not found")
+		val book = Book.findById(-1).getOrElse("not found")
 			book must equalTo("not found")
 		}
 	}
